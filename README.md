@@ -81,6 +81,8 @@ val fooBar = "roentgen"
 
 const val FOO_BAR = "inside Chernobyl Nuclear Power Plant"
 
+val btn_shutDown: Button = findViewById(R.id.btn_shutDown) // View object
+
 /* MEMBERS */
 var _fooBar = 3.6
 
@@ -88,8 +90,12 @@ val _fooBar = "roentgen"
 
 const val _FOO_BAR = "inside Chernobyl Nuclear Power Plant"
 
+val _btn_shutDown: Button = findViewById(R.id.btn_shutDown) // Memeber view object
+
 /* METHODS */
-fun fooBar(fooBar: Int) {/*...*/}
+fun fooBar(fooBar: Int) {
+  /*...*/
+}
 ```
 
 <!-- MARKDOWN LINKS & IMAGES -->
