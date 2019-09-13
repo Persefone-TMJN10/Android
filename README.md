@@ -32,11 +32,19 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
+* [Built With](#built-with)
 * [Repository Conventions](#repository-conventions)
   * [Naming](#naming)
 * [Code Conventions](#code-conventions)
   * [Naming](#naming)
-  
+
+<!-- Built With -->
+### Built With
+* [Android Studio](https://developer.android.com/studio)
+* [Kotlin](https://kotlinlang.org/docs/reference/android-overview.html)
+* [Android Kotlin API](https://developer.android.com/reference/kotlin/packages)
+* [Material Design](https://material.io/design/)
+
 <!-- REPOSITORY CONVENTIONS -->
 ## Repository Conventions
 Project wide conventions regarding branches and commits. 
