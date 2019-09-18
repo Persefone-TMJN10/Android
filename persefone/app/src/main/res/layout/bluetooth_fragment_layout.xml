@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/colorSecondary">
+
+    <Button
+            android:id="@+id/btn_activate_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/onPrimary"
+            android:text="Activate BT"
+            android:textSize="20sp"
+            android:padding="10dp"
+            >
+
+    </Button>
+    <Button
+            android:id="@+id/btn_find_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/onPrimary"
+            android:text="Find Console"
+            android:textSize="20sp"
+            android:padding="10dp"
+            >
+    </Button>
+
+</LinearLayout>
