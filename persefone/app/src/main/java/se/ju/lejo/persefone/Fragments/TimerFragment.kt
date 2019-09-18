@@ -7,14 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import se.ju.lejo.persefone.R
 
-class timerFragment: Fragment() {
+class TimerFragment: Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    private var theView: View? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.timer_fragment_layout, container, false)
+
+        if (theView == null) {
+            theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
+        }
+
+        return theView
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
 }
