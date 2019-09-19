@@ -13,9 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import se.ju.lejo.persefone.Bluetooth.BluetoothClient
 import se.ju.lejo.persefone.R
+import java.util.*
 
 class BluetoothFragment: Fragment() {
+
+    // CONSTANTS
+    val MY_UUID_INSECURE = UUID.fromString("c7e390e7-2975-4272-905e-aef4c2099506")
 
     // VIEWS
     var theView: View? = null
@@ -24,10 +29,12 @@ class BluetoothFragment: Fragment() {
 
     // BLUETOOTH OBJECTS
     var bluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    var bluetoothClient: BluetoothClient? = null
 
     // BROADCASTING OBJECTS
     var receiverBluetoothStatus: BroadcastReceiver? = null
     var recieverDeviceDiscovery: BroadcastReceiver? = null
+    var recieverBondState: BroadcastReceiver? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -101,9 +108,49 @@ class BluetoothFragment: Fragment() {
 
                     val foundDevice: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
-                    println("--[New Device]--")
-                    println("Name: " + foundDevice!!.name)
-                    println("UUID: " + foundDevice.address)
+                    if(foundDevice!!.address.equals("98:D3:51:FD:7A:96")) {
+
+                        println("--[Console Found]--")
+                        println("NAME: " + foundDevice!!.name)
+                        println("BD_ADDR: " + foundDevice.address)
+
+                        if(bluetoothAdapter.getBondedDevices().contains(foundDevice)){
+                            startClient(foundDevice)
+                        }
+                        else {
+                            foundDevice.createBond()
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+        recieverBondState = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+
+                var action = intent!!.action
+
+                if(action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
+
+                    var bondedDevice: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+
+                    when(bondedDevice.bondState) {
+
+                        BluetoothDevice.BOND_BONDED -> {
+                            println("Bonded: " + bondedDevice.address)
+
+                            if(bondedDevice.address.equals("98:D3:51:FD:7A:96")){
+                                startClient(bondedDevice)
+                            }
+                        }
+
+                        BluetoothDevice.BOND_BONDING -> {
+                            println("Bonding: " + bondedDevice.address)
+                        }
+                    }
 
                 }
 
@@ -115,6 +162,9 @@ class BluetoothFragment: Fragment() {
 
         val intentFilterDeviceDiscovery = IntentFilter(BluetoothDevice.ACTION_FOUND)
         activity!!.registerReceiver(recieverDeviceDiscovery, intentFilterDeviceDiscovery)
+
+        val intentFilterBondState = IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        activity!!.registerReceiver(recieverBondState, intentFilterBondState)
 
     }
 
@@ -170,6 +220,15 @@ class BluetoothFragment: Fragment() {
             }
 
         }
+
+    }
+
+    private fun startClient(bondDevice: BluetoothDevice) {
+
+        bluetoothAdapter.cancelDiscovery()
+
+        bluetoothClient = BluetoothClient(activity!!.baseContext)
+        bluetoothClient!!.start(bondDevice, MY_UUID_INSECURE)
 
     }
 
