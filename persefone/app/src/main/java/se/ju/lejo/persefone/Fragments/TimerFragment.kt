@@ -5,15 +5,19 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.R
 import se.ju.lejo.persefone.Data.RestHandler
 
 class TimerFragment: Fragment() {
 
     private var theView: View? = null
+    private var bluetoothHandler: BluetoothHandler? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
+        bluetoothHandler = BluetoothHandler(activity!!)
 
         if (theView == null) {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
@@ -24,7 +28,7 @@ class TimerFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         //fetchJson()
-        clockIn()
+        //clockIn()
     }
 
     fun fetchJson() {
