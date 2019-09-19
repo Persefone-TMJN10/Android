@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Models.Session
 import se.ju.lejo.persefone.R
@@ -19,7 +20,6 @@ class TimerFragment: Fragment() {
         if (theView == null) {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
-
         return theView
     }
 
