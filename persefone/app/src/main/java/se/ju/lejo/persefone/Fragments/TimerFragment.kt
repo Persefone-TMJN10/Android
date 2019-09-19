@@ -24,18 +24,18 @@ class TimerFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         //fetchJson()
-        postJson()
+        clockIn()
     }
 
     fun fetchJson() {
         println("attempting to fetch json...")
         val handler = RestHandler()
-        handler.sendGetRequest("http://3.122.218.59/session")
+        handler.sendGetRequest()
     }
 
-    fun postJson() {
+    fun clockIn() {
         println("attempting to post json...")
         val handler = RestHandler()
-        handler.sendPostRequest("http://3.122.218.59/session/", "2019-09-12 13:13:37", "2019-09-12 13:13:38")
+        handler.sendClockInPostRequest("2019-09-12 13:13:10")
     }
 }

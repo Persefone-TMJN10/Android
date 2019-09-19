@@ -3,45 +3,62 @@ package se.ju.lejo.persefone.Data
 import android.os.AsyncTask
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
+import org.json.JSONArray
 import org.json.JSONObject
+import se.ju.lejo.persefone.Models.Session
 
 class RestHandler: AsyncTask<Void, Void, String>() {
 
-    fun sendGetRequest(address: String) {
-        val httpAsync = address
-            .httpGet()
-            .responseString { request, response, result ->
-                when (result) {
-                    is Result.Failure -> {
-                        val exception = result.getException()
-                        println(exception)
-                    }
-                    is Result.Success -> {
-                        val data = result.get()
-                        println(data)
-                    }
-                }
+    private val _API = "http://3.122.218.59/"
+    private val _clockInAddress = _API + "session"
+
+    fun sendGetRequest() {
+        _clockInAddress.httpGet().responseJson { _, _, result ->
+            var results = result.get().obj()
+            var jsonArray = results.getJSONArray("payload")
+            var sessionList = ArrayList<Session>()
+
+            for (i in 0..(jsonArray.length() - 1)) {
+                val item = jsonArray.getJSONObject(i)
+                val currentItem = Session(item.toString())
+                sessionList.add(currentItem)
             }
-        httpAsync.join()
+        }
     }
 
-    fun sendPostRequest(address: String, inTime: String, outTime: String) {
-        val bodyJson = """
-            {"inTime" : "2019-12-16 14:13:37",
-                "outTime" : "2019-12-16 16:13:32"
-            }
-        """
+    fun sendClockInPostRequest(inTime: String) {
 
-        Fuel.post(address, listOf("inTime" to "2019-12-16 14:13:37"))
+        Fuel.post(_clockInAddress, listOf("inTime" to inTime))
             .timeout(10000)
             .responseJson {
                 request, response, result ->
                 println(response.statusCode)
                 println(response.responseMessage)
             }
+    }
+
+    private fun handleJsonSessionsArray(jsonString: String): ArrayList<Session>? {
+
+        val jsonArray = JSONArray(jsonString)
+
+        val list = ArrayList<Session>()
+
+        var x = 0
+
+        while (x < jsonArray.length()) {
+
+            val task = Session(jsonArray[x].toString())
+
+            list.add(task)
+
+            x++
+
+        }
+
+        return list
+
     }
 
     override fun doInBackground(vararg params: Void?): String {
