@@ -1,4 +1,4 @@
-package se.ju.lejo.persefone
+package se.ju.lejo.persefone.Data
 
 import android.os.AsyncTask
 import com.github.kittinunf.fuel.httpGet

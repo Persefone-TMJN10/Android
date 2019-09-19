@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import se.ju.lejo.persefone.R
-import se.ju.lejo.persefone.RestHandler
+import se.ju.lejo.persefone.Data.RestHandler
 
 class TimerFragment: Fragment() {
 
