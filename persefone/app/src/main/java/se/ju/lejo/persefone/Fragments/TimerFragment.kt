@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import se.ju.lejo.persefone.R
+import se.ju.lejo.persefone.RestHandler
 
 class TimerFragment: Fragment() {
 
@@ -17,11 +18,17 @@ class TimerFragment: Fragment() {
         if (theView == null) {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
-
         return theView
     }
 
     override fun onResume() {
         super.onResume()
+        fetchJson()
+    }
+
+    fun fetchJson() {
+        println("attempting to fetch json...")
+        val handler = RestHandler()
+        handler.sendGet()
     }
 }
