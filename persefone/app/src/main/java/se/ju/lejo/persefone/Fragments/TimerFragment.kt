@@ -13,9 +13,12 @@ import se.ju.lejo.persefone.R
 class TimerFragment: Fragment() {
 
     private var theView: View? = null
+    private var bluetoothHandler: BluetoothHandler? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
+        bluetoothHandler = BluetoothHandler(activity!!)
 
         if (theView == null) {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
@@ -26,7 +29,7 @@ class TimerFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         //clockIn()
-        updateSession()
+        //updateSession()
     }
 
     fun fetchJson() {
@@ -48,6 +51,6 @@ class TimerFragment: Fragment() {
         session.outTime = "2019-09-12 14:00:00"
 
         val handler = RestHandler()
-        handler.requestUpdateSession(session)
+        //handler.requestUpdateSession(session)
     }
 }

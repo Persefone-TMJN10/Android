@@ -5,9 +5,13 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import se.ju.lejo.persefone.Data.RestHandler
 import java.io.DataInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BluetoothService constructor(): Service() {
 
@@ -61,9 +65,11 @@ class BluetoothService constructor(): Service() {
         var stream: DataInputStream? = null
         var isRunning: Boolean? = false
         var inputArray: ArrayList<String>? = null
+        var restHandler: RestHandler? = null
 
         constructor(socket: BluetoothSocket): this() {
             inputArray = ArrayList<String>()
+            restHandler = RestHandler()
 
             var tmpStream: InputStream? = null
 
@@ -80,15 +86,19 @@ class BluetoothService constructor(): Service() {
             var bytes: Int? = null
 
             println("STARTING MF INPUT THREAD")
-            while(isRunning!!) {
 
+            var msg: String? = String()
+
+            while(isRunning!!) {
                 try {
                     bytes = stream!!.read(buffer)
-                    var packets: List<String> = String(buffer, 0, bytes).split(";")
-                    for(p in packets){
-                        println(p)
-                        inputArray!!.add(p)
+                    msg += String(buffer, 0, bytes)
+
+                    if(msg!!.split(",").size >= 3){
+                        messageTranslator(msg!!.split(","))
+                        msg = ""
                     }
+
                 } catch (e: IOException) {}
 
             }
@@ -101,6 +111,30 @@ class BluetoothService constructor(): Service() {
             } catch (e: IOException) {}
 
             isRunning = false
+        }
+
+        fun messageTranslator(message: List<String>) {
+
+            var calendar: Calendar? = Calendar.getInstance()
+            var dateFormatter: SimpleDateFormat? = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            var timeString: String? = dateFormatter!!.format(calendar!!.time)
+
+            when(message.get(2)) {
+
+                "1" -> {
+                    println("1 osv")
+                    restHandler?.sendClockInPostRequest(message.get(1), timeString!!)
+                }
+
+                "0" -> {
+                    println("0 osv")
+                    restHandler?.requestUpdateSession(message.get(1), timeString!!)
+                }
+
+            }
+
+
+
         }
 
     }

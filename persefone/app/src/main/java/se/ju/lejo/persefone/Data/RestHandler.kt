@@ -25,6 +25,8 @@ class RestHandler() {
 
     fun sendClockInPostRequest(tagId: String, inTime: String) {
 
+        println(tagId + " " + inTime)
+
         Fuel.post(_clockInAddress, listOf("tagId" to tagId,"inTime" to inTime))
             .timeout(10000)
             .responseJson {
@@ -34,9 +36,9 @@ class RestHandler() {
             }
     }
 
-    fun requestUpdateSession(session: Session) {
+    fun requestUpdateSession(tagId: String, outTime: String) {
 
-        Fuel.put(_clockInAddress, listOf("tagId" to session.tagId,"inTime" to session.inTime, "outTime" to session.outTime))
+        Fuel.put(_clockInAddress, listOf("tagId" to tagId, "outTime" to outTime))
             .responseJson {
                     request, response, result ->
                 println(response.statusCode)
