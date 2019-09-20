@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
 import java.io.IOException
+import java.util.*
 
 public class BluetoothClient {
 
@@ -14,6 +15,7 @@ public class BluetoothClient {
 
     companion object {
         var clientSocket: BluetoothSocket? = null
+        val uuid: UUID? = java.util.UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     }
 
     private val bluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -53,7 +55,7 @@ public class BluetoothClient {
 
             try {
                 println("CreateRfcomm")
-                tmpSocket = bondingDevice!!.createRfcommSocketToServiceRecord(bondingDevice!!.uuids.get(0).uuid)
+                tmpSocket = bondingDevice!!.createRfcommSocketToServiceRecord(uuid)
             } catch (e: IOException) {
 
             }
