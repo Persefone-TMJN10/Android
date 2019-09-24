@@ -24,6 +24,7 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
 
                 _timerTextView.text = timeRemaining
 
+                // edit here intervals for vibration
                 if (getSeconds(millisUntilFinished) % 10 == 0) {
                     _dialog?.dismiss()
                     _dialog = CustomDialog("Warning", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility!", _currentActivity)
