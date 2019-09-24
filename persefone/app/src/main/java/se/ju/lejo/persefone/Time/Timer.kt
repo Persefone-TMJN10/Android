@@ -1,5 +1,6 @@
 package se.ju.lejo.persefone.Time
 
+import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.TextView
@@ -7,10 +8,11 @@ import se.ju.lejo.persefone.Dialog.CustomDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class Timer(val _timerTextView: TextView) {
+class Timer(val _timerTextView: TextView, currentActivity: Context?) {
 
     val _countDownInterval: Long = 1000
-    val _dialogObject: CustomDialog? = null
+    val _currentActivity: Context? = currentActivity
+    var _dialog: CustomDialog? = null
 
     // Method to configure and return an instance of CountDownTimer object
     fun timerCountDown(millisInFuture:Long): CountDownTimer {
@@ -21,8 +23,11 @@ class Timer(val _timerTextView: TextView) {
                 val timeRemaining = timeString(millisUntilFinished)
 
                 _timerTextView.text = timeRemaining
+
                 if (getSeconds(millisUntilFinished) % 10 == 0) {
-                    println("Even for 10")
+                    _dialog?.dismiss()
+                    _dialog = CustomDialog("Warning", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility!", _currentActivity)
+                    _dialog?.show()
                 }
             }
 
