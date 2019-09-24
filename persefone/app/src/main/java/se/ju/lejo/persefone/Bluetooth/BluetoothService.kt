@@ -65,11 +65,9 @@ class BluetoothService constructor(): Service() {
         var stream: DataInputStream? = null
         var isRunning: Boolean? = false
         var inputArray: ArrayList<String>? = null
-        var restHandler: RestHandler? = null
 
         constructor(socket: BluetoothSocket): this() {
             inputArray = ArrayList<String>()
-            restHandler = RestHandler()
 
             var tmpStream: InputStream? = null
 
@@ -122,11 +120,11 @@ class BluetoothService constructor(): Service() {
             when(message.get(2)) {
 
                 "1" -> {
-                    restHandler?.sendClockInPostRequest(message.get(1), timeString!!)
+                    RestHandler.sendClockInPostRequest(message.get(1), timeString!!)
                 }
 
                 "0" -> {
-                    restHandler?.requestUpdateSession(message.get(1), timeString!!)
+                    RestHandler.requestUpdateSession(message.get(1), timeString!!)
                 }
 
             }

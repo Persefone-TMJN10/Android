@@ -7,59 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
-import se.ju.lejo.persefone.Data.RestHandler
-import se.ju.lejo.persefone.Models.Session
 import se.ju.lejo.persefone.R
 import se.ju.lejo.persefone.Time.Timer
 
 
 class TimerFragment: Fragment() {
 
-    private var theView: View? = null
-    private var bluetoothHandler: BluetoothHandler? = null
+    private var _theView: View? = null
+    private var _bluetoothHandler: BluetoothHandler? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        bluetoothHandler = BluetoothHandler(activity!!)
+        _bluetoothHandler = BluetoothHandler(activity!!)
 
-        if (theView == null) {
-            theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
+        if (_theView == null) {
+            _theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
 
-        val timerTextView = theView?.findViewById(R.id.timerTV) as TextView
+        val timerTextView = _theView?.findViewById(R.id.timerTV) as TextView
 
         val timer = Timer(timerTextView)
         timer.timerCountDown(60000).start()
 
-        return theView
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //clockIn()
-        //updateSession()
-    }
-
-    fun fetchJson() {
-        println("attempting to fetch json...")
-        val handler = RestHandler()
-        handler.sendGetRequest()
-    }
-
-    fun clockIn() {
-        println("attempting to post json...")
-        val handler = RestHandler()
-        handler.sendClockInPostRequest("000000","2019-09-12 13:00:10")
-    }
-
-    fun updateSession() {
-        var session = Session()
-        session.tagId = "000000"
-        session.inTime = "2019-09-12 13:13:10"
-        session.outTime = "2019-09-12 14:00:00"
-
-        val handler = RestHandler()
-        //handler.requestUpdateSession(session)
+        return _theView
     }
 }

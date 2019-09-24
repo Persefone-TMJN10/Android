@@ -2,13 +2,13 @@ package se.ju.lejo.persefone.Data
 
 object DataHandler {
 
-    private var isClockedIn: Boolean = false
+    private var _isClockedIn: Boolean = false
 
     fun setIsClockedIn(isClockedIn: Boolean) {
-        this.isClockedIn = isClockedIn
+        this._isClockedIn = isClockedIn
     }
 
     fun getIsClockedIn(): Boolean {
-        return this.isClockedIn
+        return this._isClockedIn
     }
 }

@@ -5,7 +5,7 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import se.ju.lejo.persefone.Models.Session
 
-class RestHandler() {
+object RestHandler {
     private val _API = "http://3.122.218.59/"
     private val _clockInAddress = _API + "session"
 
