@@ -1,34 +1,37 @@
-package se.ju.lejo.persefone.Timer
+package se.ju.lejo.persefone.Time
 
+import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.TextView
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class Timer(val timerTextView: TextView) {
+class Timer(val _timerTextView: TextView) {
 
-    val countDownInterval:Long = 1000
+    val _countDownInterval: Long = 1000
 
     // Method to configure and return an instance of CountDownTimer object
-    fun timer(millisInFuture:Long): CountDownTimer {
+    fun timerCountDown(millisInFuture:Long): CountDownTimer {
 
-        return object: CountDownTimer(millisInFuture,countDownInterval){
+        return object: CountDownTimer(millisInFuture,_countDownInterval) {
 
-            override fun onTick(millisUntilFinished: Long){
+            override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
-                timerTextView.text = timeRemaining
+                _timerTextView.text = timeRemaining
             }
 
             override fun onFinish() {
-                timerTextView.text = "SPRING UT FÖR FAN!"
+                val timeRemaining = timeString(0)
 
+                _timerTextView.setTextColor(Color.RED)
+                _timerTextView.text = timeRemaining
             }
         }
     }
 
     // Method to get days hours minutes seconds from milliseconds
-    fun timeString(millisUntilFinished:Long):String{
+    fun timeString(millisUntilFinished:Long): String {
         var millisUntilFinished:Long = millisUntilFinished
         val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
         millisUntilFinished -= TimeUnit.DAYS.toMillis(days)
