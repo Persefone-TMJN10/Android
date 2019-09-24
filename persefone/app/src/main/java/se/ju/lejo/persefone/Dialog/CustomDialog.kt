@@ -20,4 +20,8 @@ class CustomDialog(_title: String, _message: String, currentActivity: Context?) 
     fun show() {
         dialog?.show()
     }
+
+    fun dismiss() {
+        dialog?.dismiss()
+    }
 }
