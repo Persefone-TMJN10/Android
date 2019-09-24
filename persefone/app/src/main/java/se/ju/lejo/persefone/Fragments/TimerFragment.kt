@@ -5,10 +5,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Models.Session
 import se.ju.lejo.persefone.R
+import se.ju.lejo.persefone.Time.Timer
+
 
 class TimerFragment: Fragment() {
 
@@ -23,6 +26,12 @@ class TimerFragment: Fragment() {
         if (theView == null) {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
+
+        val timerTextView = theView?.findViewById(R.id.timerTV) as TextView
+
+        val timer = Timer(timerTextView)
+        timer.timerCountDown(60000).start()
+
         return theView
     }
 
