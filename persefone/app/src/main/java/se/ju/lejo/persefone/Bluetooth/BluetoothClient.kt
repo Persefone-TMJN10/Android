@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
+import android.support.v4.content.LocalBroadcastManager
 import java.io.IOException
 import java.util.*
 
@@ -45,6 +46,20 @@ public class BluetoothClient {
 
     inner class ClientThread constructor(): Thread() {
 
+        val ACTION_CONNECTION_CHANGE: String = "BluetoothClient.ClientThread.Connection.Change"
+        val EXTRA_CONNECTION_CHANGE: String = "BluetoothClient.ClientThread.Extra.Connection.Change"
+        val CHANGE_RFCOMM_CREATED: Int = 0
+        val CHANGE_RFCOMM_FAILURE: Int = 1
+        val CHANGE_SOCKET_CONNECTED: Int = 2
+        val CHANGE_SOCKET_FAILURE: Int = 3
+
+        private var broadcast_creating_rfcomm: Intent? = null
+        private var broadcast_failure_rfcomm: Intent? = null
+        private var broadcast_connecting_socket: Intent? = null
+        private var broadcast_failure_socket: Intent? = null
+
+
+
         constructor(device: BluetoothDevice) : this() {
             bondingDevice = device
         }
@@ -54,10 +69,9 @@ public class BluetoothClient {
             var tmpSocket: BluetoothSocket? = null
 
             try {
-                println("CreateRfcomm")
                 tmpSocket = bondingDevice!!.createRfcommSocketToServiceRecord(uuid)
-            } catch (e: IOException) {
 
+            } catch (e: IOException) {
             }
 
             clientSocket = tmpSocket

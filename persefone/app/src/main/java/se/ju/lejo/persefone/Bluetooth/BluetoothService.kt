@@ -93,9 +93,9 @@ class BluetoothService constructor(): Service() {
                 try {
                     bytes = stream!!.read(buffer)
                     msg += String(buffer, 0, bytes)
-
-                    if(msg!!.split(",").size >= 3){
-                        messageTranslator(msg!!.split(","))
+                    
+                    if(msg!!.split(";").size > 1){
+                        messageTranslator(msg!!.substring(0, msg.length-1).split(","))
                         msg = ""
                     }
 
@@ -122,12 +122,10 @@ class BluetoothService constructor(): Service() {
             when(message.get(2)) {
 
                 "1" -> {
-                    println("1 osv")
                     restHandler?.sendClockInPostRequest(message.get(1), timeString!!)
                 }
 
                 "0" -> {
-                    println("0 osv")
                     restHandler?.requestUpdateSession(message.get(1), timeString!!)
                 }
 
