@@ -3,12 +3,14 @@ package se.ju.lejo.persefone.Time
 import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.TextView
+import se.ju.lejo.persefone.Dialog.CustomDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class Timer(val _timerTextView: TextView) {
 
     val _countDownInterval: Long = 1000
+    val _dialogObject: CustomDialog? = null
 
     // Method to configure and return an instance of CountDownTimer object
     fun timerCountDown(millisInFuture:Long): CountDownTimer {
@@ -19,6 +21,9 @@ class Timer(val _timerTextView: TextView) {
                 val timeRemaining = timeString(millisUntilFinished)
 
                 _timerTextView.text = timeRemaining
+                if (getSeconds(millisUntilFinished) % 10 == 0) {
+                    println("Even for 10")
+                }
             }
 
             override fun onFinish() {
@@ -28,6 +33,10 @@ class Timer(val _timerTextView: TextView) {
                 _timerTextView.text = timeRemaining
             }
         }
+    }
+
+    fun getSeconds(millisUntilFinished: Long): Int {
+        return (millisUntilFinished.toInt() / 1000)
     }
 
     // Method to get days hours minutes seconds from milliseconds
