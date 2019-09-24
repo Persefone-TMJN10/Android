@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
+import se.ju.lejo.persefone.GottOchBlandat.RadiationTracker
 import se.ju.lejo.persefone.R
 import se.ju.lejo.persefone.Time.Timer
 
@@ -15,6 +16,7 @@ class TimerFragment: Fragment() {
 
     private var _theView: View? = null
     private var _bluetoothHandler: BluetoothHandler? = null
+    private var _radTracker: RadiationTracker = RadiationTracker()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -28,7 +30,13 @@ class TimerFragment: Fragment() {
         val timerTextView = _theView?.findViewById(R.id.timerTV) as TextView
 
         val timer = Timer(timerTextView, context)
-        timer.timerCountDown(60000).start()
+
+        //TODO: implement broadcast Receiver to listen for changes ( of E )
+        //region inside receiver
+
+        timer.timerCountDown(_radTracker.calculateTimeLeft()).start()
+
+        //endregion
 
         return _theView
     }

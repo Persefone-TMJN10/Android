@@ -22,10 +22,12 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
+                //_radiationUnitsUsed += DataHandler.getE()
+
                 _timerTextView.text = timeRemaining
 
                 // edit here intervals for vibration
-                if (getSeconds(millisUntilFinished) % 10 == 0) {
+                if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0) {
                     _dialog?.dismiss()
                     _dialog = CustomDialog("Warning", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility!", _currentActivity)
                     _dialog?.show()
