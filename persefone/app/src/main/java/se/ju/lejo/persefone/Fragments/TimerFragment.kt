@@ -27,7 +27,7 @@ class TimerFragment: Fragment() {
 
         val timerTextView = _theView?.findViewById(R.id.timerTV) as TextView
 
-        val timer = Timer(timerTextView)
+        val timer = Timer(timerTextView, context)
         timer.timerCountDown(60000).start()
 
         return _theView
