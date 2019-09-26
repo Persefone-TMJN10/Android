@@ -40,4 +40,6 @@ dependencies {
     implementation 'com.github.kittinunf.fuel:fuel-json:2.2.0'
 
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
