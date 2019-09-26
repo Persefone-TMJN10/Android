@@ -15,6 +15,10 @@ import se.ju.lejo.persefone.Time.Timer
 
 class TimerFragment: Fragment() {
 
+    companion object {
+        const val TAG = "tag_timer_fragment"
+    }
+
     private var _theView: View? = null
     private var _radTracker: RadiationTracker = RadiationTracker()
 

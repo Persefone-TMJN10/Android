@@ -17,6 +17,7 @@ import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
 import java.util.*
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
@@ -93,6 +94,11 @@ class MainActivity : AppCompatActivity() {
                             messageReader = MessageReader()
                             messageReader!!.constructMessageHandler(baseContext)
                             messageReader!!.start()
+
+                            supportFragmentManager
+                                .beginTransaction()
+                                .replace(R.id.root_layout, timerFragment as Fragment, TimerFragment.TAG)
+                                .commit()
 
                         }
 
