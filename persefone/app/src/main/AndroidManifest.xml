@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Bluetooth.BluetoothService"/>
+        <service android:name="com.root.bluetoothtester.Bluetooth.Streaming.BluetoothStreamService"/>
     </application>
 
 </manifest>

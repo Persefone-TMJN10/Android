@@ -5,14 +5,14 @@ import se.ju.lejo.persefone.Data.DataHandler
 class RadiationTracker {
 
     companion object {
-        val RADIATION_LIMIT: Long = 500000
+        val RADIATION_LIMIT: Float = 500000f
     }
 
-    var _radiationUnitsUsed: Long = 0
+    var _radiationUnitsUsed: Float = 0f
 
     fun calculateTimeLeft(): Long {
-        val radiationLeft: Long = RADIATION_LIMIT - _radiationUnitsUsed
+        val radiationLeft: Float = RADIATION_LIMIT - _radiationUnitsUsed
 
-        return (radiationLeft / DataHandler.getE()) * 1000
+        return ((radiationLeft / DataHandler.getE()) * 1000f).toLong()
     }
 }
