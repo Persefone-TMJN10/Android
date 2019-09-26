@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.TextView
+import se.ju.lejo.persefone.Data.DataHandler
 import se.ju.lejo.persefone.Dialog.CustomDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -13,16 +14,16 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
     val _countDownInterval: Long = 1000
     val _currentActivity: Context? = currentActivity
     var _dialog: CustomDialog? = null
+    var cDTimer: CountDownTimer? = null
 
-    // Method to configure and return an instance of CountDownTimer object
-    fun timerCountDown(millisInFuture:Long): CountDownTimer {
+    fun startTimer(millisInFuture: Long) {
 
-        return object: CountDownTimer(millisInFuture,_countDownInterval) {
+        cDTimer = object: CountDownTimer(millisInFuture,_countDownInterval) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
-                //_radiationUnitsUsed += DataHandler.getE()
+                DataHandler.setRadiationUnitsUsed()
 
                 _timerTextView.text = timeRemaining
 
@@ -41,6 +42,16 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
                 _timerTextView.text = timeRemaining
             }
         }
+
+        cDTimer?.start()
+    }
+
+    fun stopTimer() {
+        cDTimer?.cancel()
+        cDTimer = null
+
+        val timeRemaining = timeString(0)
+        _timerTextView.text = timeRemaining
     }
 
     fun getSeconds(millisUntilFinished: Long): Int {

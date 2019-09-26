@@ -1,14 +1,19 @@
 package se.ju.lejo.persefone.Fragments
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
+import com.root.bluetoothtester.Bluetooth.Messaging.MessageHandler
+import se.ju.lejo.persefone.Data.DataHandler
 import se.ju.lejo.persefone.GottOchBlandat.RadiationTracker
-import se.ju.lejo.persefone.MainActivity
 import se.ju.lejo.persefone.R
 import se.ju.lejo.persefone.Time.Timer
 
@@ -21,6 +26,9 @@ class TimerFragment: Fragment() {
 
     private var _theView: View? = null
     private var _radTracker: RadiationTracker = RadiationTracker()
+    private var receiverMessageHandled: BroadcastReceiver? = null
+    private var timer: Timer? = null
+    private var timerTextView: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -29,17 +37,53 @@ class TimerFragment: Fragment() {
             _theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
 
-        val timerTextView = _theView?.findViewById(R.id.timerTV) as TextView
+        timerTextView = _theView?.findViewById(R.id.timerTV)
 
-        val timer = Timer(timerTextView, context)
+        timer = Timer(timerTextView!!, context)
 
-        //TODO: implement broadcast Receiver to listen for changes ( of E )
-        //region inside receiver
-
-        timer.timerCountDown(_radTracker.calculateTimeLeft()).start()
-
-        //endregion
+        setUpReceiver()
 
         return _theView
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(receiverMessageHandled!!)
+    }
+
+    private fun setUpReceiver() {
+
+        receiverMessageHandled = object : BroadcastReceiver() {
+
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent?.action
+
+                if (action.equals(MessageHandler.ACTION_MESSAGE_HANDLED)) {
+
+                    val extra = intent?.getIntExtra(MessageHandler.EXTRA_MESSAGE_HANDLED_TYPE, 0)
+
+                    when (extra) {
+
+                        MessageHandler.TYPE_0 -> {
+
+                             if (DataHandler.getIsClockedIn()) {
+                                 timer?.startTimer(_radTracker.calculateTimeLeft())
+
+                             } else {
+                                 timer?.stopTimer()
+                             }
+                        }
+
+                        MessageHandler.TYPE_1 -> {
+                            timer?.stopTimer()
+                            timer?.startTimer(_radTracker.calculateTimeLeft())
+                        }
+                    }
+                }
+            }
+        }
+
+        val intentFilterMessageHandled = IntentFilter(MessageHandler.ACTION_MESSAGE_HANDLED)
+        LocalBroadcastManager.getInstance(context!!).registerReceiver(receiverMessageHandled!!, intentFilterMessageHandled)
     }
 }
