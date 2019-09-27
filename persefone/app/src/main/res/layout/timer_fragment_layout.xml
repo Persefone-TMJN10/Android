@@ -46,8 +46,8 @@
                 android:id="@+id/timerTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="60sp"
-                android:text="00:00:00">
+                android:textSize="50sp"
+                android:text="00:00:00:00">
 
         </TextView>
     </LinearLayout>

@@ -75,8 +75,8 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
         // Format the string
         return String.format(
             Locale.getDefault(),
-            "%02d:%02d:%02d",
-            hours, minutes,seconds
+            "%02d:%02d:%02d:%02d",
+            days, hours, minutes,seconds
         )
     }
 }
