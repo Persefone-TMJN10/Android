@@ -15,7 +15,7 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
     val _currentActivity: Context? = currentActivity
     var _dialog: CustomDialog? = null
     var cDTimer: CountDownTimer? = null
-
+    
     fun startTimer(millisInFuture: Long) {
 
         cDTimer = object: CountDownTimer(millisInFuture,_countDownInterval) {
@@ -29,17 +29,15 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
 
                 // edit here intervals for vibration
                 if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0) {
-                    _dialog?.dismiss()
-                    _dialog = CustomDialog("Warning", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility!", _currentActivity)
-                    _dialog?.show()
+                    sendDialogMessage("ATTENTION", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility")
                 }
             }
 
             override fun onFinish() {
                 val timeRemaining = timeString(0)
-
                 _timerTextView.setTextColor(Color.RED)
                 _timerTextView.text = timeRemaining
+                sendDialogMessage("WARNING", "You have overstayed your safety time, you must clock out and leave the facility immediately")
             }
         }
 
@@ -52,6 +50,12 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
 
         val timeRemaining = timeString(0)
         _timerTextView.text = timeRemaining
+    }
+
+    fun sendDialogMessage(title: String, message: String) {
+        _dialog?.dismiss()
+        _dialog = CustomDialog(title, message, _currentActivity)
+        _dialog?.show()
     }
 
     fun getSeconds(millisUntilFinished: Long): Int {
