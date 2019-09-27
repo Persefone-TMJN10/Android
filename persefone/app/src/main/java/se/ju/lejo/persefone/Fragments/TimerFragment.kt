@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageHandler
 import se.ju.lejo.persefone.Data.DataHandler
@@ -29,6 +30,8 @@ class TimerFragment: Fragment() {
     private var receiverMessageHandled: BroadcastReceiver? = null
     private var timer: Timer? = null
     private var timerTextView: TextView? = null
+    private var redLight: ImageView? = null
+    private var greenLight: ImageView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -37,7 +40,7 @@ class TimerFragment: Fragment() {
             theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
 
-        timerTextView = theView?.findViewById(R.id.timerTV)
+        setUpViews()
 
         timer = Timer(timerTextView!!, context)
 
@@ -49,6 +52,12 @@ class TimerFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         LocalBroadcastManager.getInstance(context!!).unregisterReceiver(receiverMessageHandled!!)
+    }
+
+    private fun setUpViews() {
+        timerTextView = theView?.findViewById(R.id.timerTV)
+        redLight = theView?.findViewById(R.id.IV_redLigth)
+        greenLight = theView?.findViewById(R.id.IV_greenLight)
     }
 
     private fun setUpReceiver() {
@@ -67,10 +76,18 @@ class TimerFragment: Fragment() {
                         MessageHandler.TYPE_0 -> {
 
                              if (DataHandler.getIsClockedIn()) {
+
                                  timer?.startTimer(radTracker.calculateTimeLeft())
 
+                                 greenLight?.setBackgroundColor(resources.getColor(R.color.green))
+                                 redLight?.setBackgroundColor(resources.getColor(R.color.darkRed))
+
                              } else {
+
                                  timer?.stopTimer()
+
+                                 greenLight?.setBackgroundColor(resources.getColor(R.color.darkGreen))
+                                 redLight?.setBackgroundColor(resources.getColor(R.color.red))
                              }
                         }
 
