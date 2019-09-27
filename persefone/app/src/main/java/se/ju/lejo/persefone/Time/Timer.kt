@@ -9,23 +9,23 @@ import se.ju.lejo.persefone.Dialog.CustomDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class Timer(val _timerTextView: TextView, currentActivity: Context?) {
+class Timer(val timerTextView: TextView, currentActivity: Context?) {
 
-    val _countDownInterval: Long = 1000
-    val _currentActivity: Context? = currentActivity
-    var _dialog: CustomDialog? = null
+    val countDownInterval: Long = 1000
+    val currentActivity: Context? = currentActivity
+    var dialog: CustomDialog? = null
     var cDTimer: CountDownTimer? = null
     
     fun startTimer(millisInFuture: Long) {
 
-        cDTimer = object: CountDownTimer(millisInFuture,_countDownInterval) {
+        cDTimer = object: CountDownTimer(millisInFuture,countDownInterval) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
                 DataHandler.incrementRadiationUnitsUsed()
-
-                _timerTextView.text = timeRemaining
+                timerTextView.setTextColor(Color.BLACK)
+                timerTextView.text = timeRemaining
 
                 // edit here intervals for vibration
                 if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0) {
@@ -35,8 +35,8 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
 
             override fun onFinish() {
                 val timeRemaining = timeString(0)
-                _timerTextView.setTextColor(Color.RED)
-                _timerTextView.text = timeRemaining
+                timerTextView.setTextColor(Color.RED)
+                timerTextView.text = timeRemaining
                 sendDialogMessage("WARNING", "You have overstayed your safety time, you must clock out and leave the facility immediately")
             }
         }
@@ -49,13 +49,13 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
         cDTimer = null
 
         val timeRemaining = timeString(0)
-        _timerTextView.text = timeRemaining
+        timerTextView.text = timeRemaining
     }
 
     fun sendDialogMessage(title: String, message: String) {
-        _dialog?.dismiss()
-        _dialog = CustomDialog(title, message, _currentActivity)
-        _dialog?.show()
+        dialog?.dismiss()
+        dialog = CustomDialog(title, message, currentActivity)
+        dialog?.show()
     }
 
     fun getSeconds(millisUntilFinished: Long): Int {
