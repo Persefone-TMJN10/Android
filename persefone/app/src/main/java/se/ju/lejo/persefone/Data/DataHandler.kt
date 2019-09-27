@@ -3,7 +3,7 @@ package se.ju.lejo.persefone.Data
 object DataHandler {
 
     private var _isClockedIn: Boolean = false
-    var _E: Float = 30.0f
+    var _E: Float = 0.6f
     private var _radiationUnitsUsed: Float = 0f
 
     fun setIsClockedIn(isClockedIn: Boolean) {
@@ -22,8 +22,12 @@ object DataHandler {
         return this._E
     }
 
-    fun setRadiationUnitsUsed() {
+    fun incrementRadiationUnitsUsed() {
         this._radiationUnitsUsed += this._E
+    }
+
+    fun setRadiationUnitsUsed(units: Float) {
+        this._radiationUnitsUsed = units
     }
 
     fun getRadiationUnitsUsed(): Float {

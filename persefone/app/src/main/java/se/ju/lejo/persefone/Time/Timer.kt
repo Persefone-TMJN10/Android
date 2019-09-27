@@ -23,7 +23,7 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
-                DataHandler.setRadiationUnitsUsed()
+                DataHandler.incrementRadiationUnitsUsed()
 
                 _timerTextView.text = timeRemaining
 

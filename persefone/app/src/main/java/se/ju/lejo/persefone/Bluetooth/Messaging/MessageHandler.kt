@@ -39,6 +39,8 @@ class MessageHandler {
                     "0" -> {
                         RestHandler.requestUpdateSession(message.get(1), getTimeString())
                         DataHandler.setIsClockedIn(false)
+                        DataHandler.setE(0.6f)
+                        DataHandler.setRadiationUnitsUsed(0f)
                     }
 
                     "1" -> {
