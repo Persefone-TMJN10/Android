@@ -2,35 +2,35 @@ package se.ju.lejo.persefone.Data
 
 object DataHandler {
 
-    private var _isClockedIn: Boolean = false
-    var _E: Float = 0.6f
-    private var _radiationUnitsUsed: Float = 0f
+    private var isClockedIn: Boolean = false
+    private var radiationUnitExposurePerSecond: Float = 0.6f
+    private var radiationUnitsUsed: Float = 0f
 
     fun setIsClockedIn(isClockedIn: Boolean) {
-        this._isClockedIn = isClockedIn
+        this.isClockedIn = isClockedIn
     }
 
     fun getIsClockedIn(): Boolean {
-        return this._isClockedIn
+        return this.isClockedIn
     }
 
     fun setE(e: Float) {
-        this._E = e
+        this.radiationUnitExposurePerSecond = e
     }
 
     fun getE(): Float {
-        return this._E
+        return this.radiationUnitExposurePerSecond
     }
 
     fun incrementRadiationUnitsUsed() {
-        this._radiationUnitsUsed += this._E
+        this.radiationUnitsUsed += this.radiationUnitExposurePerSecond
     }
 
     fun setRadiationUnitsUsed(units: Float) {
-        this._radiationUnitsUsed = units
+        this.radiationUnitsUsed = units
     }
 
     fun getRadiationUnitsUsed(): Float {
-        return this._radiationUnitsUsed
+        return this.radiationUnitsUsed
     }
 }

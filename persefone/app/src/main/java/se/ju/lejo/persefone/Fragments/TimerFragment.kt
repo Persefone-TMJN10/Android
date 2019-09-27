@@ -24,8 +24,8 @@ class TimerFragment: Fragment() {
         const val TAG = "tag_timer_fragment"
     }
 
-    private var _theView: View? = null
-    private var _radTracker: RadiationTracker = RadiationTracker()
+    private var theView: View? = null
+    private var radTracker: RadiationTracker = RadiationTracker()
     private var receiverMessageHandled: BroadcastReceiver? = null
     private var timer: Timer? = null
     private var timerTextView: TextView? = null
@@ -33,17 +33,17 @@ class TimerFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        if (_theView == null) {
-            _theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
+        if (theView == null) {
+            theView = inflater.inflate(R.layout.timer_fragment_layout, container, false)
         }
 
-        timerTextView = _theView?.findViewById(R.id.timerTV)
+        timerTextView = theView?.findViewById(R.id.timerTV)
 
         timer = Timer(timerTextView!!, context)
 
         setUpReceiver()
 
-        return _theView
+        return theView
     }
 
     override fun onDestroy() {
@@ -67,7 +67,7 @@ class TimerFragment: Fragment() {
                         MessageHandler.TYPE_0 -> {
 
                              if (DataHandler.getIsClockedIn()) {
-                                 timer?.startTimer(_radTracker.calculateTimeLeft())
+                                 timer?.startTimer(radTracker.calculateTimeLeft())
 
                              } else {
                                  timer?.stopTimer()
@@ -76,7 +76,7 @@ class TimerFragment: Fragment() {
 
                         MessageHandler.TYPE_1 -> {
                             timer?.stopTimer()
-                            timer?.startTimer(_radTracker.calculateTimeLeft())
+                            timer?.startTimer(radTracker.calculateTimeLeft())
                         }
                     }
                 }
