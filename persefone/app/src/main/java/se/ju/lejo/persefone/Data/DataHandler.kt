@@ -4,6 +4,7 @@ object DataHandler {
 
     private var _isClockedIn: Boolean = false
     var _E: Float = 30.0f
+    private var _radiationUnitsUsed: Float = 0f
 
     fun setIsClockedIn(isClockedIn: Boolean) {
         this._isClockedIn = isClockedIn
@@ -19,5 +20,13 @@ object DataHandler {
 
     fun getE(): Float {
         return this._E
+    }
+
+    fun setRadiationUnitsUsed() {
+        this._radiationUnitsUsed += this._E
+    }
+
+    fun getRadiationUnitsUsed(): Float {
+        return this._radiationUnitsUsed
     }
 }
