@@ -81,5 +81,4 @@ class ClientThread constructor(): Thread() {
         broadcastIntentActionStatusChanged = Intent(ACTION_STATUS_CHANGED)
 
     }
-
 }
