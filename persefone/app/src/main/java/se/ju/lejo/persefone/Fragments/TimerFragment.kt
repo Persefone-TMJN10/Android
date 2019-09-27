@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
@@ -79,15 +80,15 @@ class TimerFragment: Fragment() {
 
                                  timer?.startTimer(radTracker.calculateTimeLeft())
 
-                                 greenLight?.setBackgroundColor(resources.getColor(R.color.green))
-                                 redLight?.setBackgroundColor(resources.getColor(R.color.darkRed))
+                                 greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.green))
+                                 redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkRed))
 
                              } else {
 
                                  timer?.stopTimer()
 
-                                 greenLight?.setBackgroundColor(resources.getColor(R.color.darkGreen))
-                                 redLight?.setBackgroundColor(resources.getColor(R.color.red))
+                                 greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkGreen))
+                                 redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.red))
                              }
                         }
 
