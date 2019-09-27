@@ -68,10 +68,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startConnection() {
-
         BluetoothHandler.confirmBluetoothPermissions(this)
         BluetoothHandler.toggleDiscovery()
-
     }
 
     private fun setupReceivers() {
@@ -100,12 +98,9 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
 
                         }
-
                     }
-
                 }
             }
-
         }
 
         receiverBluetoothFoundDevice = object: BroadcastReceiver() {
