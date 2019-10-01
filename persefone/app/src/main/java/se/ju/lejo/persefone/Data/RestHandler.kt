@@ -6,11 +6,11 @@ import com.github.kittinunf.fuel.json.responseJson
 import se.ju.lejo.persefone.Models.Session
 
 object RestHandler {
-    private val _API = "http://3.122.218.59/"
-    private val _clockInAddress = _API + "session"
+    private val APIAddress = "http://3.122.218.59/"
+    private val clockInAddress = APIAddress + "session"
 
     fun sendGetRequest() {
-        _clockInAddress.httpGet().responseJson { _, _, result ->
+        clockInAddress.httpGet().responseJson { _, _, result ->
             var results = result.get().obj()
             var jsonArray = results.getJSONArray("payload")
             var sessionList = ArrayList<Session>()
@@ -27,7 +27,7 @@ object RestHandler {
 
         println(tagId + " " + inTime)
 
-        Fuel.post(_clockInAddress, listOf("tagId" to tagId,"inTime" to inTime))
+        Fuel.post(clockInAddress, listOf("tagId" to tagId,"inTime" to inTime))
             .timeout(10000)
             .responseJson {
                     request, response, result ->
@@ -38,7 +38,7 @@ object RestHandler {
 
     fun requestUpdateSession(tagId: String, outTime: String) {
 
-        Fuel.put(_clockInAddress, listOf("tagId" to tagId, "outTime" to outTime))
+        Fuel.put(clockInAddress, listOf("tagId" to tagId, "outTime" to outTime))
             .responseJson {
                     request, response, result ->
                 println(response.statusCode)

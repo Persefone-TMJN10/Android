@@ -3,9 +3,9 @@ package se.ju.lejo.persefone.Models
 import org.json.JSONObject
 
 class Session(
-    var tagId: String = "",
-    var inTime: String = "",
-    var outTime: String = ""
+    private var tagId: String = "",
+    private var inTime: String = "",
+    private var outTime: String = ""
 ) {
 
     constructor(jsonString: String): this() {

@@ -4,43 +4,58 @@ import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.TextView
+import se.ju.lejo.persefone.Data.DataHandler
 import se.ju.lejo.persefone.Dialog.CustomDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class Timer(val _timerTextView: TextView, currentActivity: Context?) {
+class Timer(val timerTextView: TextView, currentActivity: Context?) {
 
-    val _countDownInterval: Long = 1000
-    val _currentActivity: Context? = currentActivity
-    var _dialog: CustomDialog? = null
+    val countDownInterval: Long = 1000
+    val currentActivity: Context? = currentActivity
+    var dialog: CustomDialog? = null
+    var cDTimer: CountDownTimer? = null
+    
+    fun startTimer(millisInFuture: Long) {
 
-    // Method to configure and return an instance of CountDownTimer object
-    fun timerCountDown(millisInFuture:Long): CountDownTimer {
-
-        return object: CountDownTimer(millisInFuture,_countDownInterval) {
+        cDTimer = object: CountDownTimer(millisInFuture,countDownInterval) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
-                //_radiationUnitsUsed += DataHandler.getE()
-
-                _timerTextView.text = timeRemaining
+                DataHandler.incrementRadiationUnitsUsed()
+                timerTextView.setTextColor(Color.BLACK)
+                timerTextView.text = timeRemaining
 
                 // edit here intervals for vibration
-                if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0) {
-                    _dialog?.dismiss()
-                    _dialog = CustomDialog("Warning", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility!", _currentActivity)
-                    _dialog?.show()
+                if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0 && getSeconds(millisUntilFinished) != 0) {
+                    sendDialogMessage("ATTENTION", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility")
                 }
             }
 
             override fun onFinish() {
                 val timeRemaining = timeString(0)
-
-                _timerTextView.setTextColor(Color.RED)
-                _timerTextView.text = timeRemaining
+                timerTextView.setTextColor(Color.RED)
+                timerTextView.text = timeRemaining
+                sendDialogMessage("WARNING", "You have overstayed your safety time, you must clock out and leave the facility immediately")
             }
         }
+
+        cDTimer?.start()
+    }
+
+    fun stopTimer() {
+        cDTimer?.cancel()
+        cDTimer = null
+
+        val timeRemaining = timeString(0)
+        timerTextView.text = timeRemaining
+    }
+
+    fun sendDialogMessage(title: String, message: String) {
+        dialog?.dismiss()
+        dialog = CustomDialog(title, message, currentActivity)
+        dialog?.show()
     }
 
     fun getSeconds(millisUntilFinished: Long): Int {
@@ -64,8 +79,8 @@ class Timer(val _timerTextView: TextView, currentActivity: Context?) {
         // Format the string
         return String.format(
             Locale.getDefault(),
-            "%02d:%02d:%02d",
-            hours, minutes,seconds
+            "%02d:%02d:%02d:%02d",
+            days, hours, minutes,seconds
         )
     }
 }

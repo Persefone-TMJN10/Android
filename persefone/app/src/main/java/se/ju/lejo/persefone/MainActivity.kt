@@ -17,7 +17,6 @@ import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
 import java.util.*
-import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
@@ -69,10 +68,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startConnection() {
-
         BluetoothHandler.confirmBluetoothPermissions(this)
         BluetoothHandler.toggleDiscovery()
-
     }
 
     private fun setupReceivers() {
@@ -101,12 +98,9 @@ class MainActivity : AppCompatActivity() {
                                 .commit()
 
                         }
-
                     }
-
                 }
             }
-
         }
 
         receiverBluetoothFoundDevice = object: BroadcastReceiver() {
@@ -119,16 +113,14 @@ class MainActivity : AppCompatActivity() {
 
                     val foundDevice: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
-                    if(foundDevice!!.address == "64:A2:F9:F1:83:7A"){
+                    if(foundDevice!!.address == "98:D3:51:FD:7A:96"/*"64:A2:F9:F1:83:7A"*/){
 
                         bluetoothConnection.startClient(
                             foundDevice,
-                            UUID.fromString("c7e390e7-2975-4272-905e-aef4c2099506")
+                            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"/*"c7e390e7-2975-4272-905e-aef4c2099506"*/)
                         )
                     }
-
                 }
-
             }
         }
 

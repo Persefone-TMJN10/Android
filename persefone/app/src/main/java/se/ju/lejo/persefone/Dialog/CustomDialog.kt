@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.support.v4.app.Fragment
 
 class CustomDialog(_title: String, _message: String, currentActivity: Context?) {
 
@@ -31,7 +30,7 @@ class CustomDialog(_title: String, _message: String, currentActivity: Context?) 
         dialog?.dismiss()
     }
 
-    fun vibratePhone(currentActivity: Context?) {
+    private fun vibratePhone(currentActivity: Context?) {
         val vibrator = currentActivity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {
             vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
