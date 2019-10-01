@@ -38,27 +38,33 @@ class MessageHandler {
             "0" -> {
 
                 // Clock in with RFID and start environment values (radiation value, hazmat status and room id)
-                // Recalculate E based on new R, rc and pc
-                // Send broadcast
-                // Push session to DB
-                // Push startEnvironment to DB
 
                 DataHandler.setIsClockedIn(true)
+                DataHandler.setR(message.get(2).toInt())
+                DataHandler.setPcFactor(message.get(3).toInt())
+                DataHandler.calculatePc()
+                DataHandler.setRc(message.get(4).toFloat())
+                DataHandler.calculateE()
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_0)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
                 RestHandler.sendClockInPostRequest(message.get(1), getTimeString())
+                // Todooo: Push startEnvironment to DB
 
             }
 
             "1" -> {
 
-                // Clock out with RFID
-                // Send broadcast
-                // Push PUT-request to REST-API
+                // Clock out
 
                 DataHandler.setIsClockedIn(false)
+                DataHandler.setR(null)
+                DataHandler.setPcFactor(null)
+                DataHandler.setPc(null)
+                DataHandler.setRc(null)
+                DataHandler.setE(null)
+                DataHandler.setET(0f)
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_1)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
@@ -69,34 +75,39 @@ class MessageHandler {
 
             "2" -> {
                 // New radVal (0 >= R <= 100)
-                // Recalculate E based on new R
-                // Send broadcast
-                // Push radiationLevelChange to DB
 
-                DataHandler.setE(message.get(2).toFloat())
+                DataHandler.setR(message.get(1).toInt())
+                DataHandler.calculateE()
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_2)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+
+                // Push radiationLevelChange to DB
             }
 
             "3" -> {
                 // New hazmat status (0 = off, 1 = true)
-                // Recalculate E based on new pc (protective coefficient)
-                // Send broadcast
-                // Push hazmatChange to DB
+
+                DataHandler.setPcFactor(message.get(1).toInt())
+                DataHandler.calculatePc()
+                DataHandler.calculateE()
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_3)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+
+                // Push hazmatChange to DB
             }
 
             "4" -> {
                 // New room id {0,1,2}
-                // Recalculate E based on new rc (room coefficient)
-                // Send broadcast
-                // Push roomChange to DB
+
+                DataHandler.setRc(message.get(1).toFloat())
+                DataHandler.calculateE()
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_4)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+
+                // Push roomChange to DB
             }
 
         }

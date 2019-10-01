@@ -23,7 +23,7 @@ class Timer(val timerTextView: TextView, currentActivity: Context?) {
             override fun onTick(millisUntilFinished: Long) {
                 val timeRemaining = timeString(millisUntilFinished)
 
-                DataHandler.incrementRadiationUnitsUsed()
+                DataHandler.incrementET()
                 timerTextView.setTextColor(Color.BLACK)
                 timerTextView.text = timeRemaining
 

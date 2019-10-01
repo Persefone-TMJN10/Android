@@ -3,8 +3,12 @@ package se.ju.lejo.persefone.Data
 object DataHandler {
 
     private var isClockedIn: Boolean = false
-    private var radiationUnitExposurePerSecond: Float = 0.6f
-    private var radiationUnitsUsed: Float = 0f
+    private var E: Float? = null  // Human radiation exposure per second
+    private var R: Int? = null    // Radiation output per second
+    private var pcFactor: Int? = null // The dynamic factor of the dynamic addend in the formula of the protective coefficient
+    private var pc: Int? = null   // Protective coefficient
+    private var rc: Float? = null // Room coefficient
+    private var ET: Float = 0f    // E (radiation exposure per second) * T (Time)
 
     fun setIsClockedIn(isClockedIn: Boolean) {
         this.isClockedIn = isClockedIn
@@ -14,23 +18,59 @@ object DataHandler {
         return this.isClockedIn
     }
 
-    fun setE(e: Float) {
-        this.radiationUnitExposurePerSecond = e
+    fun calculateE() {
+        this.E = (this.R!!.toFloat() * this.rc!!) / this.pc!!.toFloat()
     }
 
-    fun getE(): Float {
-        return this.radiationUnitExposurePerSecond
+    fun setE(E: Float?) {
+        this.E = E
     }
 
-    fun incrementRadiationUnitsUsed() {
-        this.radiationUnitsUsed += this.radiationUnitExposurePerSecond
+    fun getE(): Float? {
+        return this.E
     }
 
-    fun setRadiationUnitsUsed(units: Float) {
-        this.radiationUnitsUsed = units
+    fun setR(R: Int?) {
+        this.R = R
     }
 
-    fun getRadiationUnitsUsed(): Float {
-        return this.radiationUnitsUsed
+    fun getR(): Int? {
+        return this.R
+    }
+
+    fun calculatePc() {
+        this.pc = 1 + 4 * this.pcFactor!!
+    }
+
+    fun setPcFactor(pcFactor: Int?) {
+        this.pcFactor = pcFactor
+    }
+
+    fun setPc(pc: Int?) {
+        this.pc = pc
+    }
+
+    fun getPc(): Int? {
+        return this.pc
+    }
+
+    fun setRc(rc: Float?) {
+        this.rc = rc
+    }
+
+    fun getRc(): Float? {
+        return this.rc
+    }
+
+    fun incrementET() {
+        this.ET += this.E!!
+    }
+
+    fun setET(ET: Float) {
+        this.ET = ET
+    }
+
+    fun getET(): Float? {
+        return this.ET
     }
 }
