@@ -8,7 +8,8 @@ class MessageDecoder {
     constructor() {
 
         supportedSizes = ArrayList()
-        supportedSizes!!.add(3)
+        supportedSizes!!.add(2)
+        supportedSizes!!.add(5)
 
     }
 
