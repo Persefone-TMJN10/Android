@@ -27,9 +27,6 @@ class MessageHandler {
     // BROADCASTING
     private var broadcastIntentMessageHandled: Intent? = null
 
-    // ENVIRONMENT STARTUP
-    private var startEnvironment: StartEnvironment? = null
-
     constructor(context: Context) {
         this.context = context
         setupIntents()
@@ -44,8 +41,8 @@ class MessageHandler {
                 // Clock in with RFID and start environment values (radiation value, hazmat status and room id)
 
                 DataHandler.setIsClockedIn(true)
-                DataHandler.setR(message.get(2).toInt())
-                DataHandler.setPcFactor(message.get(3).toInt())
+                DataHandler.setR(message.get(2).toFloat().toInt())
+                DataHandler.setPcFactor(message.get(3).toFloat().toInt())
                 DataHandler.calculatePc()
                 DataHandler.setRc(message.get(4).toFloat())
                 DataHandler.calculateE()
@@ -55,11 +52,11 @@ class MessageHandler {
 
                 RestHandler.postSession(message.get(1), getTimeString())
 
+
                 // Todo: Push startEnvironment to DB
-                this.startEnvironment?.radLevel = message[2].toInt()
-                this.startEnvironment?.hazmatStatus = message[3].toInt()
-                this.startEnvironment?.roomId = message[4].toInt()
-                RestHandler.postStartEnvironment(this.startEnvironment!!)
+                // ENVIRONMENT STARTUP
+                val startEnvironment = StartEnvironment(1, message.get(2).toFloat().toInt(), message.get(3).toFloat().toInt(), message.get(4).toFloat().toInt())
+                RestHandler.postStartEnvironment(startEnvironment)
             }
 
             "1" -> {
@@ -83,14 +80,13 @@ class MessageHandler {
 
             "2" -> {
                 // New radVal (0 >= R <= 100)
-
-                DataHandler.setR(message.get(1).toInt())
-                DataHandler.calculateE()
-
-                broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_2)
-                LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
-
-                // Push radiationLevelChange to DB
+                if (DataHandler.getIsClockedIn()) {
+                    DataHandler.setR(message.get(1).toInt())
+                    DataHandler.calculateE()
+                    broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_2)
+                    LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+                    // Push radiationLevelChange to DB
+                }
             }
 
             "3" -> {
