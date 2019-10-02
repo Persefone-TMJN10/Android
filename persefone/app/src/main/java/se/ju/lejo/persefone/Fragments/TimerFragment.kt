@@ -85,6 +85,21 @@ class TimerFragment: Fragment() {
                             greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkGreen))
                             redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.red))
                         }
+
+                        MessageHandler.TYPE_2 -> {
+                            timer?.stopTimer()
+                            timer?.startTimer(radTracker.calculateTimeLeft())
+                        }
+
+                        MessageHandler.TYPE_3 -> {
+                            timer?.stopTimer()
+                            timer?.startTimer(radTracker.calculateTimeLeft())
+                        }
+
+                        MessageHandler.TYPE_4 -> {
+                            timer?.stopTimer()
+                            timer?.startTimer(radTracker.calculateTimeLeft())
+                        }
                     }
                 }
             }

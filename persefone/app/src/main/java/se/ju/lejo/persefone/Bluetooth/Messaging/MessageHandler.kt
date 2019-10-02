@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
 import se.ju.lejo.persefone.Data.DataHandler
+import se.ju.lejo.persefone.Data.Resources.HazmatChange
+import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
+import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Data.RestHandler
 import java.text.SimpleDateFormat
@@ -52,7 +55,13 @@ class MessageHandler {
                 RestHandler.postSession(message.get(1), getTimeString())
 
                 // ENVIRONMENT STARTUP
-                val startEnvironment = StartEnvironment(1, message.get(2).toFloat().toInt(), message.get(3).toFloat().toInt(), message.get(4).toFloat().toInt())
+                val startEnvironment = StartEnvironment(
+                    1,
+                    message.get(2).toFloat().toInt(),
+                    message.get(3).toFloat().toInt(),
+                    message.get(4).toFloat().toInt()
+                )
+
                 RestHandler.postStartEnvironment(startEnvironment)
             }
 
@@ -73,37 +82,68 @@ class MessageHandler {
             "2" -> {
                 // New radVal (0 >= R <= 100)
                 if (DataHandler.getIsClockedIn()) {
-                    DataHandler.setR(message.get(1).toInt())
+
+                    DataHandler.setR(message.get(1).toFloat().toInt())
                     DataHandler.calculateE()
+
                     broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_2)
                     LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
-                    // Push radiationLevelChange to DB
+
+                    val radLevelChange = RadiationLevelChange(
+                        message.get(1).toFloat().toInt(),
+                        getTimeString()
+                        )
+
+                    RestHandler.postRadiationLevelChange(radLevelChange)
+
                 }
             }
 
             "3" -> {
                 // New hazmat status (0 = off, 1 = true)
 
-                DataHandler.setPcFactor(message.get(1).toInt())
-                DataHandler.calculatePc()
-                DataHandler.calculateE()
+                if(DataHandler.getIsClockedIn()) {
 
-                broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_3)
-                LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+                    DataHandler.setPcFactor(message.get(1).toInt())
+                    DataHandler.calculatePc()
+                    DataHandler.calculateE()
 
-                // Push hazmatChange to DB
+                    broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_3)
+                    LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+
+                    val hazmatChange = HazmatChange(
+                        1,
+                        message.get(1).toInt(),
+                        getTimeString()
+                    )
+
+                    RestHandler.postHazmatChange(hazmatChange)
+
+                }
+
             }
 
             "4" -> {
                 // New room id {0,1,2}
 
-                DataHandler.setRc(message.get(1).toFloat())
-                DataHandler.calculateE()
+                if(DataHandler.getIsClockedIn()) {
 
-                broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_4)
-                LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+                    DataHandler.setRc(message.get(1).toFloat())
+                    DataHandler.calculateE()
 
-                // Push roomChange to DB
+                    broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_4)
+                    LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
+
+                    val roomChange = RoomChange(
+                        1,
+                        message.get(1).toInt(),
+                        getTimeString()
+                    )
+
+                    RestHandler.postRoomChange(roomChange)
+
+                }
+
             }
 
         }
