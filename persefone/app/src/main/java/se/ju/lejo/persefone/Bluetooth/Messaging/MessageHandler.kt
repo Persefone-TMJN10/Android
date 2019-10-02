@@ -37,7 +37,6 @@ class MessageHandler {
         when(message.get(0)) {
 
             "0" -> {
-
                 // Clock in with RFID and start environment values (radiation value, hazmat status and room id)
 
                 DataHandler.setIsClockedIn(true)
