@@ -4,6 +4,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import se.ju.lejo.persefone.Data.Resources.HazmatChange
+import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
 import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Models.Session
@@ -12,6 +13,7 @@ object RestHandler {
     private val APIAddress = "http://3.122.218.59/"
     private val sessionEndpoint = APIAddress + "session"
     private val startEnvironmentEndpoint = APIAddress + "start-environment"
+    private val radiationLevelChangeEndpoint = APIAddress + "radiation-level-change"
     private val hazmatChangeEndpoint = APIAddress + "hazmat-change"
     private val roomChangeEndpoint = APIAddress + "room-change"
 
@@ -62,6 +64,24 @@ object RestHandler {
                 "radiationLevel" to data.radLevel,
                 "hazmatStatus" to data.hazmatStatus,
                 "roomId" to data.roomId
+            )
+        )
+            .timeout(10000)
+            .responseJson {
+                    request, response, result ->
+                println(response.statusCode)
+                println(response.responseMessage)
+            }
+    }
+
+    fun postRadiationLevelChange(data: RadiationLevelChange) {
+
+
+        Fuel.post(
+            radiationLevelChangeEndpoint,
+            listOf(
+                "level" to data.level,
+                "time" to data.time
             )
         )
             .timeout(10000)
