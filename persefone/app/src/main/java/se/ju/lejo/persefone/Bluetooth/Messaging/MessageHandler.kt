@@ -51,8 +51,6 @@ class MessageHandler {
 
                 RestHandler.postSession(message.get(1), getTimeString())
 
-
-                // Todo: Push startEnvironment to DB
                 // ENVIRONMENT STARTUP
                 val startEnvironment = StartEnvironment(1, message.get(2).toFloat().toInt(), message.get(3).toFloat().toInt(), message.get(4).toFloat().toInt())
                 RestHandler.postStartEnvironment(startEnvironment)
@@ -63,11 +61,6 @@ class MessageHandler {
                 // Clock out
 
                 DataHandler.setIsClockedIn(false)
-                DataHandler.setR(null)
-                DataHandler.setPcFactor(null)
-                DataHandler.setPc(null)
-                DataHandler.setRc(null)
-                DataHandler.setE(null)
                 DataHandler.setET(0f)
 
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_1)

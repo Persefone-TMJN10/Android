@@ -8,7 +8,6 @@ class RadiationTracker {
         val RADIATION_LIMIT: Float = 500000f
     }
 
-
     fun calculateTimeLeft(): Long {
         val radiationLeft: Float = RADIATION_LIMIT - DataHandler.getET()!!
 

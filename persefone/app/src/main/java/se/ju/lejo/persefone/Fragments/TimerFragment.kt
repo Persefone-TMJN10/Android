@@ -75,26 +75,15 @@ class TimerFragment: Fragment() {
                     when (extra) {
 
                         MessageHandler.TYPE_0 -> {
-
-                             if (DataHandler.getIsClockedIn()) {
-
-                                 timer?.startTimer(radTracker.calculateTimeLeft())
-
-                                 greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.green))
-                                 redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkRed))
-
-                             } else {
-
-                                 timer?.stopTimer()
-
-                                 greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkGreen))
-                                 redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.red))
-                             }
+                             timer?.startTimer(radTracker.calculateTimeLeft())
+                             greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.green))
+                             redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkRed))
                         }
 
                         MessageHandler.TYPE_1 -> {
                             timer?.stopTimer()
-                            timer?.startTimer(radTracker.calculateTimeLeft())
+                            greenLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.darkGreen))
+                            redLight?.background?.setTint(ContextCompat.getColor(context!!, R.color.red))
                         }
                     }
                 }

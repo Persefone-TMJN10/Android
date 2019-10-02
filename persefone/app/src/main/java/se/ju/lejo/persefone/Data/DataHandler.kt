@@ -65,7 +65,12 @@ object DataHandler {
     }
 
     fun setRc(rc: Float?) {
-        this.rc = rc
+
+        when(rc) {
+            0f -> this.rc = 0.1f
+            1f -> this.rc = 0.5f
+            2f -> this.rc = 1.6f
+        }
     }
 
     fun getRc(): Float? {
