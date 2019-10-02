@@ -4,6 +4,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import se.ju.lejo.persefone.Data.Resources.HazmatChange
+import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Models.Session
 
@@ -12,6 +13,7 @@ object RestHandler {
     private val sessionEndpoint = APIAddress + "session"
     private val startEnvironmentEndpoint = APIAddress + "start-environment"
     private val hazmatChangeEndpoint = APIAddress + "hazmat-change"
+    private val roomChangeEndpoint = APIAddress + "room-change"
 
     fun sendGetRequest() {
         sessionEndpoint.httpGet().responseJson { _, _, result ->
@@ -78,6 +80,25 @@ object RestHandler {
             listOf(
                 "sessionId" to data.sessionId,
                 "status" to data.status,
+                "time" to data.time
+            )
+        )
+            .timeout(10000)
+            .responseJson {
+                    request, response, result ->
+                println(response.statusCode)
+                println(response.responseMessage)
+            }
+    }
+
+    fun postRoomChange(data: RoomChange) {
+
+
+        Fuel.post(
+            roomChangeEndpoint,
+            listOf(
+                "sessionId" to data.sessionId,
+                "roomId" to data.roomId,
                 "time" to data.time
             )
         )
