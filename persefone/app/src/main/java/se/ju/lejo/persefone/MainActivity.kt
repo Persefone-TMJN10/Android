@@ -14,6 +14,8 @@ import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageReader
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
+import se.ju.lejo.persefone.Data.Resources.StartEnvironment
+import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
 import java.util.*
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .add(R.id.root_layout, connectToBTFragment as Fragment, ConnectToBTFragment.TAG)
             .commit()
-
+        
     }
 
     override fun onDestroy() {

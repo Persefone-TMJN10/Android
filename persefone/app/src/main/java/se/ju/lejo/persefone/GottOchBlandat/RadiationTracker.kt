@@ -10,8 +10,8 @@ class RadiationTracker {
 
 
     fun calculateTimeLeft(): Long {
-        val radiationLeft: Float = RADIATION_LIMIT - DataHandler.getET()
+        val radiationLeft: Float = RADIATION_LIMIT - DataHandler.getET()!!
 
-        return ((radiationLeft / DataHandler.getE()) * 1000f).toLong()
+        return ((radiationLeft / DataHandler.getE()!!) * 1000f).toLong()
     }
 }

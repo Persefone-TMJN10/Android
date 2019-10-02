@@ -49,7 +49,7 @@ class MessageHandler {
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_0)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
-                RestHandler.sendClockInPostRequest(message.get(1), getTimeString())
+                RestHandler.postSession(message.get(1), getTimeString())
                 // Todooo: Push startEnvironment to DB
 
             }
@@ -69,7 +69,7 @@ class MessageHandler {
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_1)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
-                RestHandler.requestUpdateSession(message.get(1), getTimeString())
+                RestHandler.putSession(message.get(1), getTimeString())
 
             }
 

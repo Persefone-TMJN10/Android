@@ -3,6 +3,8 @@ package se.ju.lejo.persefone.Data
 object DataHandler {
 
     private var isClockedIn: Boolean = false
+    private var currentSessionId: Int? = null
+
     private var E: Float? = null  // Human radiation exposure per second
     private var R: Int? = null    // Radiation output per second
     private var pcFactor: Int? = null // The dynamic factor of the dynamic addend in the formula of the protective coefficient
@@ -16,6 +18,14 @@ object DataHandler {
 
     fun getIsClockedIn(): Boolean {
         return this.isClockedIn
+    }
+
+    fun setCurrentSessionId(id: Int?) {
+        this.currentSessionId = id
+    }
+
+    fun getCurrentSessionId(): Int? {
+        return this.currentSessionId
     }
 
     fun calculateE() {
