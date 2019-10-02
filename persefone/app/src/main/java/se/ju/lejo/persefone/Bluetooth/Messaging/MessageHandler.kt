@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
 import se.ju.lejo.persefone.Data.DataHandler
+import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Data.RestHandler
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +26,9 @@ class MessageHandler {
 
     // BROADCASTING
     private var broadcastIntentMessageHandled: Intent? = null
+
+    // ENVIRONMENT STARTUP
+    private var startEnvironment: StartEnvironment? = null
 
     constructor(context: Context) {
         this.context = context
@@ -50,8 +54,12 @@ class MessageHandler {
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
                 RestHandler.postSession(message.get(1), getTimeString())
-                // Todooo: Push startEnvironment to DB
 
+                // Todo: Push startEnvironment to DB
+                this.startEnvironment?.radLevel = message[2].toInt()
+                this.startEnvironment?.hazmatStatus = message[3].toInt()
+                this.startEnvironment?.roomId = message[4].toInt()
+                RestHandler.postStartEnvironment(this.startEnvironment!!)
             }
 
             "1" -> {
