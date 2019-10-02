@@ -52,22 +52,27 @@ class MessageHandler {
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_0)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
-                RestHandler.postSession(message.get(1), getTimeString())
+                RestHandler.postSession(message.get(1), getTimeString()) {
+                    if(it) {
 
-                // ENVIRONMENT STARTUP
-                val startEnvironment = StartEnvironment(
-                    1,
-                    message.get(2).toFloat().toInt(),
-                    message.get(3).toFloat().toInt(),
-                    message.get(4).toFloat().toInt()
-                )
+                        // ENVIRONMENT STARTUP
+                        val startEnvironment = StartEnvironment(
+                            DataHandler.getCurrentSessionId()!!,
+                            message.get(2).toFloat().toInt(),
+                            message.get(3).toFloat().toInt(),
+                            message.get(4).toFloat().toInt()
+                        )
 
-                RestHandler.postStartEnvironment(startEnvironment)
+                        RestHandler.postStartEnvironment(startEnvironment)
+                    }
+                }
+
             }
 
             "1" -> {
 
                 // Clock out
+                val totalExposure = DataHandler.getET()
 
                 DataHandler.setIsClockedIn(false)
                 DataHandler.setET(0f)
@@ -75,7 +80,7 @@ class MessageHandler {
                 broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_1)
                 LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
-                RestHandler.putSession(message.get(1), getTimeString())
+                RestHandler.putSession(DataHandler.getCurrentSessionId()!!, getTimeString(), totalExposure!!.toLong())
 
             }
 
@@ -112,7 +117,7 @@ class MessageHandler {
                     LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
                     val hazmatChange = HazmatChange(
-                        1,
+                        DataHandler.getCurrentSessionId()!!,
                         message.get(1).toInt(),
                         getTimeString()
                     )
@@ -135,7 +140,7 @@ class MessageHandler {
                     LocalBroadcastManager.getInstance(context!!).sendBroadcast(broadcastIntentMessageHandled!!)
 
                     val roomChange = RoomChange(
-                        1,
+                        DataHandler.getCurrentSessionId()!!,
                         message.get(1).toInt(),
                         getTimeString()
                     )

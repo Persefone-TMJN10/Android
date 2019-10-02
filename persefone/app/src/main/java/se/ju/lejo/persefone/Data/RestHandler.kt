@@ -31,7 +31,7 @@ object RestHandler {
         }
     }
 
-    fun postSession(tagId: String, inTime: String) {
+    fun postSession(tagId: String, inTime: String, completion: (success: Boolean) -> Unit) {
 
         println(tagId + " " + inTime)
 
@@ -41,12 +41,20 @@ object RestHandler {
                     request, response, result ->
                 println(response.statusCode)
                 println(response.responseMessage)
+
+                if(response.statusCode == 200) {
+                    val sessionId = result.get().obj().get("insertId")
+                    DataHandler.setCurrentSessionId(sessionId.toString().toInt())
+                    completion(true)
+                }
+
+                completion(false)
             }
     }
 
-    fun putSession(tagId: String, outTime: String) {
+    fun putSession(sessionId: Int, outTime: String, totalExposure: Long) {
 
-        Fuel.put(sessionEndpoint, listOf("tagId" to tagId, "outTime" to outTime))
+        Fuel.put(sessionEndpoint, listOf("id" to sessionId, "outTime" to outTime, "totalExposure" to totalExposure))
             .responseJson {
                     request, response, result ->
                 println(response.statusCode)
