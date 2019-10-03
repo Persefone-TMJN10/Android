@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,44 +16,77 @@
             app:cardElevation="10dp"
             app:cardPreventCornerOverlap="true">
 
-        <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <TextView
+                    android:id="@+id/tw_inTimeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="In:"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                    android:id="@+id/tw_outTimeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tw_inTimeTitle"
+                    android:layout_marginTop="5dp"
+                    android:text="Out:"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tw_inTimeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tw_inTimeTitle"></TextView>
+
+            <TextView
+                    android:id="@+id/tw_radTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tw_outTimeTitle"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Radiation:"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tw_outTimeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tw_outTimeTitle"></TextView>
+
+            <TextView
                     android:id="@+id/tw_inTime_history"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp"
-                    android:text="inTime">
-            </TextView>
-
-            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="128dp"
+                    android:text="inTime"
+                    app:layout_constraintStart_toEndOf="@+id/tw_inTimeTitle"
+                    app:layout_constraintTop_toTopOf="@+id/tw_inTimeTitle"></TextView>
+
+            <TextView
                     android:id="@+id/tw_outTime_history"
-                    android:layout_toEndOf="@+id/tw_inTime_history"
-                    android:layout_marginStart="10dp"
-                    android:text="outTime"
-                    >
-            </TextView>
-
-            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="outTime"
+                    app:layout_constraintStart_toStartOf="@+id/tw_inTime_history"
+                    app:layout_constraintTop_toTopOf="@+id/tw_outTimeTitle"></TextView>
+
+            <TextView
                     android:id="@+id/tw_radiationAccumulated_history"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="radiation"
-                    >
-            </TextView>
-        </RelativeLayout>
+                    android:textColor="@color/red"
+                    app:layout_constraintStart_toStartOf="@+id/tw_outTime_history"
+                    app:layout_constraintTop_toTopOf="@+id/tw_radTitle"></TextView>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+
+
 
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

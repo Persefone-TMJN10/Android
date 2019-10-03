@@ -36,6 +36,9 @@ class HistoryFragment: Fragment() {
             dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 90))
             dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 500))
             dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 290))
+            dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 290))
+            dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 290))
+            dummyData.add(HistoryListItem("2019-10-04 22:33:57", "2019-10-04 22:33:57", 290))
             view.history_recycler_view.layoutManager = this.activity?.let { LinearLayoutManager(it) }
             recycleViewAdapter = this.context?.let { RecycleViewAdapter(dummyData, it) }
             view.history_recycler_view.adapter = recycleViewAdapter
