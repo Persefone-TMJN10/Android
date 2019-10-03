@@ -7,6 +7,7 @@ import se.ju.lejo.persefone.Data.Resources.HazmatChange
 import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
 import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
+import se.ju.lejo.persefone.Models.HistoryListItem
 import se.ju.lejo.persefone.Models.Session
 
 object RestHandler {
@@ -31,6 +32,36 @@ object RestHandler {
         }
     }
 
+    fun getSessionForSpecificRFID(RFID: String?, completion: (success: Boolean) -> Unit) {
+
+        var getSessionForSpecificRFIDEndpoint = sessionEndpoint
+
+        if(RFID != null) {
+            getSessionForSpecificRFIDEndpoint += "?tagId=$RFID"
+        }
+
+        Fuel.get(getSessionForSpecificRFIDEndpoint)
+            .timeout(10000)
+            .responseJson { _, response, result ->
+                println(response.statusCode)
+                println(response.responseMessage)
+
+                if (response.statusCode == 200) {
+                    val results = result.get().obj()
+                    val jsonArray = results.getJSONArray("payload")
+                    val historyListForRFID = ArrayList<HistoryListItem>()
+                    for (i in 0 until (jsonArray.length())) {
+                        val item = jsonArray.getJSONObject(i)
+                        val tempListItem = HistoryListItem(item["inTime"].toString(), item["outTime"].toString(), item["totalExposure"].toString())
+                        historyListForRFID.add(tempListItem)
+                    }
+                    DataHandler.setHistoryListForRFID(historyListForRFID)
+                    completion(true)
+                }
+                completion(false)
+            }
+    }
+
     fun postSession(tagId: String, inTime: String, completion: (success: Boolean) -> Unit) {
 
         println(tagId + " " + inTime)
@@ -38,7 +69,7 @@ object RestHandler {
         Fuel.post(sessionEndpoint, listOf("tagId" to tagId,"inTime" to inTime))
             .timeout(10000)
             .responseJson {
-                    request, response, result ->
+                    _, response, result ->
                 println(response.statusCode)
                 println(response.responseMessage)
 

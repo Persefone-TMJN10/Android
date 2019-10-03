@@ -9,19 +9,21 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.widget.LinearLayout
 import com.root.bluetoothtester.Bluetooth.Connection.BluetoothConnection
 import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageReader
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
+import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
-import se.ju.lejo.persefone.Data.Resources.HazmatChange
-import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
-import se.ju.lejo.persefone.Data.Resources.RoomChange
-import se.ju.lejo.persefone.Data.Resources.StartEnvironment
-import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
+import se.ju.lejo.persefone.Fragments.HistoryFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
+import se.ju.lejo.persefone.Models.HistoryListItem
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     // GUI
     var timerFragment: TimerFragment? = null
     var connectToBTFragment: ConnectToBTFragment? = null
+    var historyFragment: HistoryFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +55,13 @@ class MainActivity : AppCompatActivity() {
 
         constructFragments()
 
+
+
+        //changed here for main fragment
         supportFragmentManager
             .beginTransaction()
             .add(R.id.root_layout, connectToBTFragment as Fragment, ConnectToBTFragment.TAG)
             .commit()
-
     }
 
     override fun onDestroy() {
@@ -70,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun constructFragments() {
         timerFragment = TimerFragment()
         connectToBTFragment = ConnectToBTFragment()
+        historyFragment = HistoryFragment()
     }
 
     fun startConnection() {
