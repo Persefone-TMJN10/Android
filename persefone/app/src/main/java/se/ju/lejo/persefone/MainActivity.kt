@@ -16,13 +16,16 @@ import com.root.bluetoothtester.Bluetooth.Connection.BluetoothConnection
 import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageReader
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
+import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
+import se.ju.lejo.persefone.Fragments.HistoryFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
 import se.ju.lejo.persefone.Main.MainPagerAdapter
 import se.ju.lejo.persefone.Main.MainScreen
 import se.ju.lejo.persefone.Main.getMainScreenForMenuItem
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     // GUI
     var timerFragment: TimerFragment? = null
     var connectToBTFragment: ConnectToBTFragment? = null
+    var historyFragment: HistoryFragment? = null
 
     private lateinit var viewPager: ViewPager
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -137,6 +141,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun constructFragments() {
         connectToBTFragment = ConnectToBTFragment()
+        historyFragment = HistoryFragment()
     }
 
     fun startConnection() {

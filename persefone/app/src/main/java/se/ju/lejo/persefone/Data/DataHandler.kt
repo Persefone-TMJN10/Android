@@ -1,5 +1,7 @@
 package se.ju.lejo.persefone.Data
 
+import se.ju.lejo.persefone.Models.HistoryListItem
+
 object DataHandler {
 
     private var isClockedIn: Boolean = false
@@ -12,6 +14,15 @@ object DataHandler {
     private var rc: Float? = null // Room coefficient
     private var ET: Float = 0f    // E (radiation exposure per second) * T (Time)
     private var rfId: String = ""
+    private lateinit var historyListForRFID: ArrayList<HistoryListItem>
+
+    fun getHistoryListForRFID(): ArrayList<HistoryListItem> {
+        return this.historyListForRFID
+    }
+
+    fun setHistoryListForRFID(arrayList: ArrayList<HistoryListItem>) {
+        this.historyListForRFID = arrayList
+    }
 
     fun setIsClockedIn(isClockedIn: Boolean) {
         this.isClockedIn = isClockedIn
