@@ -46,9 +46,8 @@ class HistoryFragment: Fragment() {
     }
 
     private fun updateRecycleViewAdapter() {
-        RestHandler.getSessionForSpecificRFID() {
+        RestHandler.getSessionForSpecificRFID("RFID") {
             if(it) {
-                println("____ SUPER COOL")
                 listOfHistoryItems.clear()
                 listOfHistoryItems.addAll(DataHandler.getHistoryListForRFID())
                 recycleViewAdapter!!.notifyDataSetChanged()

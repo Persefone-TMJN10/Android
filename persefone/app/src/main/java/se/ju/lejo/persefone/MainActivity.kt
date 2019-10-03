@@ -60,9 +60,8 @@ class MainActivity : AppCompatActivity() {
         //changed here for main fragment
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.root_layout, historyFragment as Fragment, HistoryFragment.TAG)
+            .add(R.id.root_layout, connectToBTFragment as Fragment, ConnectToBTFragment.TAG)
             .commit()
-
     }
 
     override fun onDestroy() {

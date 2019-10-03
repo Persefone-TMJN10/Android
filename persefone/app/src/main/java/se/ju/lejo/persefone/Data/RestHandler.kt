@@ -32,9 +32,15 @@ object RestHandler {
         }
     }
 
-    fun getSessionForSpecificRFID(completion: (success: Boolean) -> Unit) {
+    fun getSessionForSpecificRFID(RFID: String?, completion: (success: Boolean) -> Unit) {
 
-        Fuel.get(sessionEndpoint+"?tagId=RFID")
+        var getSessionForSpecificRFIDEndpoint = sessionEndpoint
+
+        if(RFID != null) {
+            getSessionForSpecificRFIDEndpoint += "?tagId=$RFID"
+        }
+
+        Fuel.get(getSessionForSpecificRFIDEndpoint)
             .timeout(10000)
             .responseJson { _, response, result ->
                 println(response.statusCode)
@@ -63,7 +69,7 @@ object RestHandler {
         Fuel.post(sessionEndpoint, listOf("tagId" to tagId,"inTime" to inTime))
             .timeout(10000)
             .responseJson {
-                    request, response, result ->
+                    _, response, result ->
                 println(response.statusCode)
                 println(response.responseMessage)
 
