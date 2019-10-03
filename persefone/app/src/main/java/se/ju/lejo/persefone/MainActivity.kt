@@ -9,20 +9,21 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.widget.LinearLayout
 import com.root.bluetoothtester.Bluetooth.Connection.BluetoothConnection
 import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageReader
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
+import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
-import se.ju.lejo.persefone.Data.Resources.HazmatChange
-import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
-import se.ju.lejo.persefone.Data.Resources.RoomChange
-import se.ju.lejo.persefone.Data.Resources.StartEnvironment
-import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.HistoryFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
+import se.ju.lejo.persefone.Models.HistoryList
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +54,19 @@ class MainActivity : AppCompatActivity() {
         serviceController = ServiceController(this)
 
         constructFragments()
+
+        // LIST VIEW
+        val recyclerView = findViewById<RecyclerView>(R.id.history_recycler_view)
+        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
+        val historyList = ArrayList<HistoryList>()
+        historyList.add(HistoryList("2019-10-02 22:33:57", "2019-10-02 22:33:57", 30))
+        historyList.add(HistoryList("2019-10-03 22:33:57", "2019-10-03 22:33:57", 40))
+        historyList.add(HistoryList("2019-10-04 22:33:57", "2019-10-04 22:33:57", 90))
+
+        val recycleViewAdapter = RecycleViewAdapter(historyList)
+        recyclerView?.adapter = recycleViewAdapter
+
 
         //changed here for main fragment
         supportFragmentManager
