@@ -20,6 +20,7 @@ import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Data.RestHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
+import se.ju.lejo.persefone.Fragments.HistoryFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
 import java.util.*
 
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     // GUI
     var timerFragment: TimerFragment? = null
     var connectToBTFragment: ConnectToBTFragment? = null
+    var historyFragment: HistoryFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +54,10 @@ class MainActivity : AppCompatActivity() {
 
         constructFragments()
 
+        //changed here for main fragment
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.root_layout, connectToBTFragment as Fragment, ConnectToBTFragment.TAG)
+            .add(R.id.root_layout, historyFragment as Fragment, HistoryFragment.TAG)
             .commit()
 
     }
@@ -70,6 +73,7 @@ class MainActivity : AppCompatActivity() {
     private fun constructFragments() {
         timerFragment = TimerFragment()
         connectToBTFragment = ConnectToBTFragment()
+        historyFragment = HistoryFragment()
     }
 
     fun startConnection() {
