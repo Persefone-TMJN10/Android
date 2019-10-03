@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.support.v4.content.LocalBroadcastManager.*
+import androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance
 import com.root.bluetoothtester.Bluetooth.Connection.BluetoothConnection
 import java.io.IOException
 import java.io.OutputStream

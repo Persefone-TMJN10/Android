@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Persefone</string>
+
+    <string name="connect">CONNECT</string>
+    <string name="timer">TIMER</string>
+    <string name="history">HISTORY</string>
 </resources>

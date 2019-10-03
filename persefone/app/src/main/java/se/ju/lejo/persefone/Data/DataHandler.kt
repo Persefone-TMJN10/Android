@@ -11,6 +11,7 @@ object DataHandler {
     private var pc: Int? = null   // Protective coefficient
     private var rc: Float? = null // Room coefficient
     private var ET: Float = 0f    // E (radiation exposure per second) * T (Time)
+    private var rfId: String = ""
 
     fun setIsClockedIn(isClockedIn: Boolean) {
         this.isClockedIn = isClockedIn
@@ -87,5 +88,13 @@ object DataHandler {
 
     fun getET(): Float? {
         return this.ET
+    }
+
+    fun setRfId(rfId: String) {
+        this.rfId = rfId
+    }
+
+    fun getRfId(): String {
+        return this.rfId
     }
 }

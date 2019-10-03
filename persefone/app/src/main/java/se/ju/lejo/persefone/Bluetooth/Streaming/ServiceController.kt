@@ -3,7 +3,7 @@ package com.root.bluetoothtester.Bluetooth.Streaming
 import android.app.Activity
 import android.content.*
 import android.os.IBinder
-import android.support.v4.content.LocalBroadcastManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 class ServiceController {
 

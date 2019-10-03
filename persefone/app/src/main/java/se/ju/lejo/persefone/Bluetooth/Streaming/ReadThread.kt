@@ -41,7 +41,7 @@ class ReadThread constructor(): Thread() {
                 println(msg)
 
                 if(msg!!.split(";").size > 1){
-                    inputArray!!.add(msg!!.split(";")[0])
+                    inputArray!!.add(msg.split(";")[0])
                     msg = ""
                 }
 

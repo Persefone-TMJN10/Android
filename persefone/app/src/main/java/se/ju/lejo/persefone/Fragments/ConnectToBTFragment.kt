@@ -7,12 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.MainActivity
@@ -39,6 +39,7 @@ class ConnectToBTFragment: Fragment() {
     private var receiverBluetoothClientStatusChange: BroadcastReceiver? = null
     private var receiverBluetoothDiscoverStarted: BroadcastReceiver? = null
     private var receiverBluetoothFoundDevice: BroadcastReceiver? = null
+    private var receiverClientThreadStatusChanged: BroadcastReceiver? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -47,6 +48,8 @@ class ConnectToBTFragment: Fragment() {
             theView = inflater.inflate(R.layout.connect_to_bt_fragment, container, false)
         }
 
+        //view?.findViewById<TextView>(R.id.connected)?.visibility = View.GONE
+        connectBluetooth?.isEnabled = true
 
         return theView
     }
@@ -197,6 +200,28 @@ class ConnectToBTFragment: Fragment() {
             }
         }
 
+        receiverClientThreadStatusChanged = object: BroadcastReceiver() {
+
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent!!.action
+
+                if(action.equals(ClientThread.ACTION_STATUS_CHANGED)) {
+
+                    val extraStatus = intent.getIntExtra(ClientThread.EXTRA_STATUS, 0)
+
+                    when(extraStatus) {
+
+                        ClientThread.STATUS_CONNECTED -> {
+
+                            //view?.findViewById<TextView>(R.id.connected)?.visibility = View.VISIBLE
+                            connectBluetooth?.isEnabled = false
+
+                        }
+                    }
+                }
+            }
+        }
+
         val intentFilterBluetoothStateChange = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
         activity!!.baseContext.registerReceiver(receiverBluetoothStateChange, intentFilterBluetoothStateChange)
 
@@ -205,6 +230,11 @@ class ConnectToBTFragment: Fragment() {
             receiverBluetoothClientStatusChange!!,
             intentFilterBluetoothClientStatusChanged
         )
+
+        var intentFilterClientThreadStatusChange = IntentFilter(ClientThread.ACTION_STATUS_CHANGED)
+        LocalBroadcastManager.getInstance(activity!!.baseContext).registerReceiver(
+            receiverClientThreadStatusChanged!!,
+            intentFilterClientThreadStatusChange)
 
         var intentFilterDiscoveryStarted = IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
         activity!!.baseContext.registerReceiver(receiverBluetoothDiscoverStarted, intentFilterDiscoveryStarted)
