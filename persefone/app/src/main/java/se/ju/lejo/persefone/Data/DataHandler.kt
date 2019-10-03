@@ -13,7 +13,7 @@ object DataHandler {
     private var pc: Int? = null   // Protective coefficient
     private var rc: Float? = null // Room coefficient
     private var ET: Float = 0f    // E (radiation exposure per second) * T (Time)
-    private var rfId: String = ""
+    private var rfId: String? = null
     private lateinit var historyListForRFID: ArrayList<HistoryListItem>
 
     fun getHistoryListForRFID(): ArrayList<HistoryListItem> {
@@ -105,7 +105,7 @@ object DataHandler {
         this.rfId = rfId
     }
 
-    fun getRfId(): String {
+    fun getRfId(): String? {
         return this.rfId
     }
 }

@@ -43,6 +43,7 @@ class MessageHandler {
                 // Clock in with RFID and start environment values (radiation value, hazmat status and room id)
 
                 DataHandler.setIsClockedIn(true)
+                DataHandler.setRfId(message.get(1))
                 DataHandler.setR(message.get(2).toFloat().toInt())
                 DataHandler.setPcFactor(message.get(3).toFloat().toInt())
                 DataHandler.calculatePc()

@@ -1,11 +1,11 @@
 package se.ju.lejo.persefone.Adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import se.ju.lejo.persefone.Models.HistoryListItem
 import se.ju.lejo.persefone.R
 
@@ -18,12 +18,10 @@ class RecycleViewAdapter(val historyListItem: ArrayList<HistoryListItem>, val co
     }
 
     override fun getItemCount(): Int {
-        println("_____________ASD ${historyListItem.size}")
         return historyListItem.size
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        println("_____________ASD ${historyListItem.size}")
         p0.inTime?.text = historyListItem[p1].inTime
         p0.outTime?.text = historyListItem[p1].outTime
         p0.accumulatedRad?.text = historyListItem[p1].totalRadAccumulated

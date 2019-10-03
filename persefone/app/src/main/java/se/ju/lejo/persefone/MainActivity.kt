@@ -16,7 +16,6 @@ import com.root.bluetoothtester.Bluetooth.Connection.BluetoothConnection
 import com.root.bluetoothtester.Bluetooth.Connection.ClientThread
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageReader
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
-import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.HistoryFragment
@@ -25,7 +24,6 @@ import se.ju.lejo.persefone.Main.MainPagerAdapter
 import se.ju.lejo.persefone.Main.MainScreen
 import se.ju.lejo.persefone.Main.getMainScreenForMenuItem
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -59,43 +57,34 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setupReceivers()
         serviceController = ServiceController(this)
 
-
-        //constructFragments()
-/*
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.root_layout, connectToBTFragment as Fragment, ConnectToBTFragment.TAG)
-            .commit()
-*/
         setUpNavBar()
     }
 
     private fun setUpNavBar() {
-        // Initialize components/views.
         viewPager = findViewById(R.id.view_pager);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         mainPagerAdapter = MainPagerAdapter(supportFragmentManager)
 
-        // Set items to be displayed.
         mainPagerAdapter.setItems(arrayListOf(MainScreen.CONNECT, MainScreen.TIMER, MainScreen.HISTORY))
 
-        // Show the default screen.
         val defaultScreen = MainScreen.CONNECT
         scrollToScreen(defaultScreen)
         selectBottomNavigationViewMenuItem(defaultScreen.menuItemId)
         supportActionBar?.setTitle(defaultScreen.titleStringId)
 
-        // Set the listener for item selection in the bottom navigation view.
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
 
-        // Attach an adapter to the view pager and make it select the bottom navigation
-        // menu item and change the title to proper values when selected.
         viewPager.adapter = mainPagerAdapter
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 val selectedScreen = mainPagerAdapter.getItems()[position]
                 selectBottomNavigationViewMenuItem(selectedScreen.menuItemId)
                 supportActionBar?.setTitle(selectedScreen.titleStringId)
+
+                if (position == 2) {
+                    println("PAGE 2")
+                    historyFragment?.updateRecycleViewAdapter()
+                }
             }
         })
     }

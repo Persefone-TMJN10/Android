@@ -1,12 +1,12 @@
 package se.ju.lejo.persefone.Fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.history_fragment_layout.view.*
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Data.DataHandler
 import se.ju.lejo.persefone.Data.RestHandler
@@ -34,24 +34,49 @@ class HistoryFragment: Fragment() {
         if (theView == null) {
 
             val view = inflater.inflate(R.layout.history_fragment_layout, container, false)
-            view.history_recycler_view.layoutManager = this.activity?.let { LinearLayoutManager(it) }
+
+            view.findViewById<RecyclerView>(R.id.history_recycler_view)
+
+            view.findViewById<RecyclerView>(R.id.history_recycler_view).layoutManager = this.activity?.let { LinearLayoutManager(it) }
             recycleViewAdapter = this.context?.let { RecycleViewAdapter(listOfHistoryItems, it) }
-            view.history_recycler_view.adapter = recycleViewAdapter
+            view.findViewById<RecyclerView>(R.id.history_recycler_view).adapter = recycleViewAdapter
 
             theView = view
         }
-        updateRecycleViewAdapter()
 
         return theView
     }
 
-    private fun updateRecycleViewAdapter() {
-        RestHandler.getSessionForSpecificRFID("RFID") {
-            if(it) {
-                listOfHistoryItems.clear()
-                listOfHistoryItems.addAll(DataHandler.getHistoryListForRFID())
-                recycleViewAdapter!!.notifyDataSetChanged()
+    override fun onStart() {
+        super.onStart()
+        if (DataHandler.getRfId() != null) {
+            updateRecycleViewAdapter()
+        }
+    }
+
+    /*
+    override fun onResume() {
+        super.onResume()
+
+        if (DataHandler.getRfId() != null) {
+            updateRecycleViewAdapter()
+        }
+    }*/
+
+    fun updateRecycleViewAdapter() {
+
+        if (DataHandler.getRfId() != null) {
+            RestHandler.getSessionForSpecificRFID(DataHandler.getRfId()) {
+                if(it) {
+                    activity!!.runOnUiThread {
+                        listOfHistoryItems.clear()
+                        listOfHistoryItems.addAll(DataHandler.getHistoryListForRFID())
+
+                        recycleViewAdapter!!.notifyDataSetChanged()
+                    }
+                }
             }
         }
+
     }
 }
