@@ -7,6 +7,7 @@ import se.ju.lejo.persefone.Data.Resources.HazmatChange
 import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
 import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
+import se.ju.lejo.persefone.Models.HistoryListItem
 import se.ju.lejo.persefone.Models.Session
 
 object RestHandler {
@@ -29,6 +30,30 @@ object RestHandler {
                 sessionList.add(currentItem)
             }
         }
+    }
+
+    fun getSessionForSpecificRFID(completion: (success: Boolean) -> Unit) {
+
+        Fuel.get(sessionEndpoint+"?tagId=RFID")
+            .timeout(10000)
+            .responseJson { _, response, result ->
+                println(response.statusCode)
+                println(response.responseMessage)
+
+                if (response.statusCode == 200) {
+                    val results = result.get().obj()
+                    val jsonArray = results.getJSONArray("payload")
+                    val historyListForRFID = ArrayList<HistoryListItem>()
+                    for (i in 0 until (jsonArray.length())) {
+                        val item = jsonArray.getJSONObject(i)
+                        val tempListItem = HistoryListItem(item["inTime"].toString(), item["outTime"].toString(), item["totalExposure"].toString())
+                        historyListForRFID.add(tempListItem)
+                    }
+                    DataHandler.setHistoryListForRFID(historyListForRFID)
+                    completion(true)
+                }
+                completion(false)
+            }
     }
 
     fun postSession(tagId: String, inTime: String, completion: (success: Boolean) -> Unit) {

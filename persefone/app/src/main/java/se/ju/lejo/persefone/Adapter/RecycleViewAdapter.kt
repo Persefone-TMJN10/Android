@@ -18,13 +18,15 @@ class RecycleViewAdapter(val historyListItem: ArrayList<HistoryListItem>, val co
     }
 
     override fun getItemCount(): Int {
+        println("_____________ASD ${historyListItem.size}")
         return historyListItem.size
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+        println("_____________ASD ${historyListItem.size}")
         p0.inTime?.text = historyListItem[p1].inTime
         p0.outTime?.text = historyListItem[p1].outTime
-        p0.accumulatedRad?.text = historyListItem[p1].totalRadAccumulated.toString()
+        p0.accumulatedRad?.text = historyListItem[p1].totalRadAccumulated
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
