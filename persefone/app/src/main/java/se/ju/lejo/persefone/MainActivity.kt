@@ -21,7 +21,7 @@ import se.ju.lejo.persefone.Bluetooth.BluetoothHandler
 import se.ju.lejo.persefone.Fragments.ConnectToBTFragment
 import se.ju.lejo.persefone.Fragments.HistoryFragment
 import se.ju.lejo.persefone.Fragments.TimerFragment
-import se.ju.lejo.persefone.Models.HistoryList
+import se.ju.lejo.persefone.Models.HistoryListItem
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -55,17 +55,6 @@ class MainActivity : AppCompatActivity() {
 
         constructFragments()
 
-        // LIST VIEW
-        val recyclerView = findViewById<RecyclerView>(R.id.history_recycler_view)
-        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-
-        val historyList = ArrayList<HistoryList>()
-        historyList.add(HistoryList("2019-10-02 22:33:57", "2019-10-02 22:33:57", 30))
-        historyList.add(HistoryList("2019-10-03 22:33:57", "2019-10-03 22:33:57", 40))
-        historyList.add(HistoryList("2019-10-04 22:33:57", "2019-10-04 22:33:57", 90))
-
-        val recycleViewAdapter = RecycleViewAdapter(historyList)
-        recyclerView?.adapter = recycleViewAdapter
 
 
         //changed here for main fragment
