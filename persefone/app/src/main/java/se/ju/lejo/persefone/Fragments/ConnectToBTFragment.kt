@@ -80,6 +80,7 @@ class ConnectToBTFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         context?.unregisterReceiver(receiverBluetoothStateChange)
+        context?.unregisterReceiver(receiverClientThreadStatusChanged)
     }
 
     private fun findViews() {

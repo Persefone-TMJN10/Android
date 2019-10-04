@@ -176,11 +176,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                     val foundDevice: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
-                    if(foundDevice!!.address == /*"98:D3:51:FD:7A:96"*/"64:A2:F9:F1:83:7A"){
+                    if(foundDevice!!.address == "98:D3:51:FD:7A:96"/*"64:A2:F9:F1:83:7A"*/){
 
                         bluetoothConnection.startClient(
                             foundDevice,
-                            UUID.fromString(/*"00001101-0000-1000-8000-00805F9B34FB"*/"c7e390e7-2975-4272-905e-aef4c2099506")
+                            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"/*"c7e390e7-2975-4272-905e-aef4c2099506"*/)
                         )
                     }
                 }

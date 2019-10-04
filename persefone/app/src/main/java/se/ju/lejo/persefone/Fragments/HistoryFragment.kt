@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import se.ju.lejo.persefone.Adapter.RecycleViewAdapter
 import se.ju.lejo.persefone.Data.DataHandler
 import se.ju.lejo.persefone.Data.RestHandler
@@ -41,15 +44,20 @@ class HistoryFragment: Fragment() {
             theView = view
         }
 
+        if (DataHandler.getRfId() != null) {
+            updateRecycleViewAdapter()
+        }
+
         return theView
     }
 
+    /*
     override fun onStart() {
         super.onStart()
         if (DataHandler.getRfId() != null) {
             updateRecycleViewAdapter()
         }
-    }
+    }*/
 
     /*
     override fun onResume() {

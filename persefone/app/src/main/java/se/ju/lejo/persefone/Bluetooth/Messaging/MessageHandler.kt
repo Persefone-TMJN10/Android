@@ -9,6 +9,7 @@ import se.ju.lejo.persefone.Data.Resources.RadiationLevelChange
 import se.ju.lejo.persefone.Data.Resources.RoomChange
 import se.ju.lejo.persefone.Data.Resources.StartEnvironment
 import se.ju.lejo.persefone.Data.RestHandler
+import se.ju.lejo.persefone.Fragments.HistoryFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
