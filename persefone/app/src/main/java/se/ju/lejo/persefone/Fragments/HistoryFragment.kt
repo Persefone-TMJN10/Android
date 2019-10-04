@@ -51,23 +51,6 @@ class HistoryFragment: Fragment() {
         return theView
     }
 
-    /*
-    override fun onStart() {
-        super.onStart()
-        if (DataHandler.getRfId() != null) {
-            updateRecycleViewAdapter()
-        }
-    }*/
-
-    /*
-    override fun onResume() {
-        super.onResume()
-
-        if (DataHandler.getRfId() != null) {
-            updateRecycleViewAdapter()
-        }
-    }*/
-
     fun updateRecycleViewAdapter() {
 
         if (DataHandler.getRfId() != null) {
