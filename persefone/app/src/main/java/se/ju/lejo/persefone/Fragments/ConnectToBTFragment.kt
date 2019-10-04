@@ -80,7 +80,7 @@ class ConnectToBTFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         context?.unregisterReceiver(receiverBluetoothStateChange)
-        context?.unregisterReceiver(receiverClientThreadStatusChanged)
+        //context?.unregisterReceiver(receiverClientThreadStatusChanged)
     }
 
     private fun findViews() {
@@ -201,6 +201,7 @@ class ConnectToBTFragment: Fragment() {
             }
         }
 
+
         receiverClientThreadStatusChanged = object: BroadcastReceiver() {
 
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -232,10 +233,12 @@ class ConnectToBTFragment: Fragment() {
             intentFilterBluetoothClientStatusChanged
         )
 
+
         var intentFilterClientThreadStatusChange = IntentFilter(ClientThread.ACTION_STATUS_CHANGED)
         LocalBroadcastManager.getInstance(activity!!.baseContext).registerReceiver(
             receiverClientThreadStatusChanged!!,
             intentFilterClientThreadStatusChange)
+
 
         var intentFilterDiscoveryStarted = IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
         activity!!.baseContext.registerReceiver(receiverBluetoothDiscoverStarted, intentFilterDiscoveryStarted)

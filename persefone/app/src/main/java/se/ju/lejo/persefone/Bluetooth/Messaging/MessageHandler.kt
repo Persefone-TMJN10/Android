@@ -91,6 +91,7 @@ class MessageHandler {
                 if (DataHandler.getIsClockedIn()) {
 
                     DataHandler.setR(message.get(1).toFloat().toInt())
+                    DataHandler.setRadValLeft(message.get(2).toFloat())
                     DataHandler.calculateE()
 
                     broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_2)
@@ -112,6 +113,7 @@ class MessageHandler {
                 if(DataHandler.getIsClockedIn()) {
 
                     DataHandler.setPcFactor(message.get(1).toInt())
+                    DataHandler.setRadValLeft(message.get(2).toFloat())
                     DataHandler.calculatePc()
                     DataHandler.calculateE()
 
@@ -136,6 +138,7 @@ class MessageHandler {
                 if(DataHandler.getIsClockedIn()) {
 
                     DataHandler.setRc(message.get(1).toFloat())
+                    DataHandler.setRadValLeft(message.get(2).toFloat())
                     DataHandler.calculateE()
 
                     broadcastIntentMessageHandled!!.putExtra(EXTRA_MESSAGE_HANDLED_TYPE, TYPE_4)

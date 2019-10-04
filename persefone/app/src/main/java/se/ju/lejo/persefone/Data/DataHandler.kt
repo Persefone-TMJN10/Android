@@ -15,6 +15,7 @@ object DataHandler {
     private var ET: Float = 0f    // E (radiation exposure per second) * T (Time)
     private var rfId: String? = null
     private lateinit var historyListForRFID: ArrayList<HistoryListItem>
+    private var radValLeft: Float = 500000f
 
     fun getHistoryListForRFID(): ArrayList<HistoryListItem> {
         return this.historyListForRFID
@@ -107,5 +108,13 @@ object DataHandler {
 
     fun getRfId(): String? {
         return this.rfId
+    }
+
+    fun setRadValLeft(radLeft: Float) {
+        this.radValLeft = radLeft
+    }
+
+    fun getRadValLeft(): Float {
+        return this.radValLeft
     }
 }
