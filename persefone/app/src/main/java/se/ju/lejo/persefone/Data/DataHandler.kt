@@ -45,20 +45,12 @@ object DataHandler {
         this.E = (this.R!!.toFloat() * this.rc!!) / this.pc!!.toFloat()
     }
 
-    fun setE(E: Float?) {
-        this.E = E
-    }
-
     fun getE(): Float? {
         return this.E
     }
 
     fun setR(R: Int?) {
         this.R = R
-    }
-
-    fun getR(): Int? {
-        return this.R
     }
 
     fun calculatePc() {
@@ -69,14 +61,6 @@ object DataHandler {
         this.pcFactor = pcFactor
     }
 
-    fun setPc(pc: Int?) {
-        this.pc = pc
-    }
-
-    fun getPc(): Int? {
-        return this.pc
-    }
-
     fun setRc(rc: Float?) {
 
         when(rc) {
@@ -84,10 +68,6 @@ object DataHandler {
             1f -> this.rc = 0.5f
             2f -> this.rc = 1.6f
         }
-    }
-
-    fun getRc(): Float? {
-        return this.rc
     }
 
     fun incrementET() {

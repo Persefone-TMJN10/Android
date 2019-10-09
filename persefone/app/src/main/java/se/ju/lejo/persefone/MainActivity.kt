@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var messageReader: MessageReader? = null
 
     // GUI
-    var timerFragment: TimerFragment? = null
     var connectToBTFragment: ConnectToBTFragment? = null
     var historyFragment: HistoryFragment? = null
 

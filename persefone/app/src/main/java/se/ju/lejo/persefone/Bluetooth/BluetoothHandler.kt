@@ -34,10 +34,6 @@ object BluetoothHandler {
         return adapter.isEnabled
     }
 
-    fun isDiscovering(): Boolean {
-        return adapter.isDiscovering
-    }
-
     fun confirmBluetoothPermissions(activity: Activity) {
 
         var permissionCheck = activity.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION")

@@ -44,16 +44,6 @@ class BluetoothStreamService: Service() {
 
     }
 
-    fun write(message: String) {
-
-        try {
-            outputStream!!.write((message + ";").toByteArray())
-        } catch (e: IOException) {
-            println(e.stackTrace)
-        }
-
-    }
-
     fun read(): String? {
 
         if(readThread!!.inputArray!!.size > 0) {
@@ -66,7 +56,7 @@ class BluetoothStreamService: Service() {
         return StreamBinder()
     }
 
-    inner class StreamBinder constructor(): Binder() {
+    inner class StreamBinder: Binder() {
 
         fun getService(): BluetoothStreamService {
             return this@BluetoothStreamService
@@ -79,7 +69,7 @@ class BluetoothStreamService: Service() {
 
         readThread!!.cancel()
 
-        var retry: Boolean = true
+        var retry = true
 
         while(retry) {
 

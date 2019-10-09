@@ -48,7 +48,6 @@ class ConnectToBTFragment: Fragment() {
             theView = inflater.inflate(R.layout.connect_to_bt_fragment, container, false)
         }
 
-        //view?.findViewById<TextView>(R.id.connected)?.visibility = View.GONE
         connectBluetooth?.isEnabled = true
 
         return theView
@@ -80,7 +79,6 @@ class ConnectToBTFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         context?.unregisterReceiver(receiverBluetoothStateChange)
-        //context?.unregisterReceiver(receiverClientThreadStatusChanged)
     }
 
     private fun findViews() {
@@ -153,10 +151,10 @@ class ConnectToBTFragment: Fragment() {
 
                         ClientThread.STATUS_CONSTRUCTED -> loadingText!!.text = "Connection constructed"
 
-                        ClientThread.STATUS_CONNECTING -> loadingText!!.text = "Connecting to server"
+                        ClientThread.STATUS_CONNECTING -> loadingText!!.text = "Connecting to console"
 
                         ClientThread.STATUS_CONNECTED -> {
-                            loadingText!!.text = "Server connected"
+                            loadingText!!.text = "Console connected"
                         }
 
                     }
@@ -174,7 +172,7 @@ class ConnectToBTFragment: Fragment() {
 
                 if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
 
-                    loadingText!!.text = "Searching for device"
+                    loadingText!!.text = "Searching for console"
 
                 }
 
@@ -193,7 +191,7 @@ class ConnectToBTFragment: Fragment() {
                     val foundDevice: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
                     if(foundDevice!!.address == "64:A2:F9:F1:83:7A"){
-                        loadingText!!.text = "Device found"
+                        loadingText!!.text = "Console found"
                     }
 
                 }
@@ -215,7 +213,6 @@ class ConnectToBTFragment: Fragment() {
 
                         ClientThread.STATUS_CONNECTED -> {
 
-                            //view?.findViewById<TextView>(R.id.connected)?.visibility = View.VISIBLE
                             connectBluetooth?.isEnabled = false
 
                         }

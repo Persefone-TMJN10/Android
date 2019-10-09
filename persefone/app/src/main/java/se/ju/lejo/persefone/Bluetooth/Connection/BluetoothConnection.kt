@@ -1,11 +1,8 @@
 package com.root.bluetoothtester.Bluetooth.Connection
 
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
-import android.content.Intent
-import com.root.bluetoothtester.Bluetooth.Streaming.BluetoothStreamService
 import java.util.*
 
 class BluetoothConnection {

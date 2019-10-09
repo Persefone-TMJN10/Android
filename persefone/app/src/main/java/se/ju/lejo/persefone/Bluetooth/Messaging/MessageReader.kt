@@ -1,7 +1,6 @@
 package com.root.bluetoothtester.Bluetooth.Messaging
 
 import android.content.Context
-import android.os.Message
 import com.root.bluetoothtester.Bluetooth.Streaming.ServiceController
 
 class MessageReader {

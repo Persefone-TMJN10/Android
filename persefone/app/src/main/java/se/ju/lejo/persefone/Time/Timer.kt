@@ -27,7 +27,6 @@ class Timer(val timerTextView: TextView, currentActivity: Context?) {
                 timerTextView.setTextColor(Color.BLACK)
                 timerTextView.text = timeRemaining
 
-                // edit here intervals for vibration
                 if (millisUntilFinished <= 60000 && getSeconds(millisUntilFinished) % 10 == 0 && getSeconds(millisUntilFinished) != 0) {
                     sendDialogMessage("ATTENTION", "You only have " + getSeconds(millisUntilFinished) + " seconds left before you must clock out and leave the facility")
                 }
@@ -62,7 +61,6 @@ class Timer(val timerTextView: TextView, currentActivity: Context?) {
         return (millisUntilFinished.toInt() / 1000)
     }
 
-    // Method to get days hours minutes seconds from milliseconds
     fun timeString(millisUntilFinished:Long): String {
         var millisUntilFinished:Long = millisUntilFinished
         val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
@@ -76,7 +74,6 @@ class Timer(val timerTextView: TextView, currentActivity: Context?) {
 
         val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
 
-        // Format the string
         return String.format(
             Locale.getDefault(),
             "%02d:%02d:%02d:%02d",

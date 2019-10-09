@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.root.bluetoothtester.Bluetooth.Messaging.MessageHandler
-import se.ju.lejo.persefone.GottOchBlandat.RadiationTracker
+import se.ju.lejo.persefone.Utility.RadiationTracker
 import se.ju.lejo.persefone.R
 import se.ju.lejo.persefone.Time.Timer
 
